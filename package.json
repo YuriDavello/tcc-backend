@@ -1,0 +1,11 @@
+{
+  "name": "tcc-backend",
+  "version": "1.0.0",
+  "description": "backend do projeto de tcc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yuri",
+  "license": "ISC"
+}
