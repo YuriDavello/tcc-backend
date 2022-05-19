@@ -1,8 +1,10 @@
-import express from 'express';
-import 'express-async-errors';
-import cors from 'cors';
-import routes from './routes';
-import './database';
+require("dotenv").config();
+
+import express from "express";
+import "express-async-errors";
+import cors from "cors";
+import routes from "./routes";
+import "./database";
 
 class App {
   constructor() {
@@ -25,7 +27,7 @@ class App {
   start() {
     const port = process.env.PORT;
 
-    console.log(`Inicializando sistema na porta ${port}`);
+    console.log(`Starting server on port ${port}`);
 
     this.express.listen(port, () => {
       console.log(`Server is running! http://localhost:${port}`);
@@ -33,13 +35,12 @@ class App {
   }
 
   async init() {
-    console.log('Iniciando servidor');
+    console.log("Iniciando servidor");
     this.start();
   }
 
   async finish() {
-    console.log('Finalizando servidor');
-    console.log('Servidor finalizado com sucesso');
+    console.log("Servidor finalizado com sucesso");
   }
 }
 

@@ -1,5 +1,4 @@
-import User from '../../models/User';
-import ErrorService from '../../services/ErrorService';
+import User from "../../models/User";
 
 class UserService {
   async get({ email }) {
@@ -65,7 +64,7 @@ class UserService {
 
   async list() {
     const users = await User.findAll({
-      order: [['name', 'ASC']],
+      order: [["name", "ASC"]],
     });
     return users;
   }
