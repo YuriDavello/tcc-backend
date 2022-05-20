@@ -35,7 +35,7 @@ class UserService {
 
   async delete(id, transaction) {
     const user = await User.findByPk(id);
-    if (!user) false;
+    if (!user) return false;
 
     await User.destroy({ where: { id }, transaction });
 

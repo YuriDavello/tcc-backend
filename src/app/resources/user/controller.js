@@ -1,5 +1,5 @@
-import User from '../../models/User';
-import UserService from './service';
+import User from "../../models/User";
+import UserService from "./service";
 
 class UserController {
   async create(req, res) {
@@ -8,11 +8,12 @@ class UserController {
     const userService = new UserService();
 
     const user = await userService.get({ email });
-    if (user) return res.status(400).json({ message: 'E-mail já cadastrado' });
+    if (user) return res.status(400).json({ message: "E-mail já cadastrado" });
 
     const newUser = await userService.create({
       name,
       email,
+      password,
       rawPassword: password,
       userType,
     });
@@ -36,7 +37,7 @@ class UserController {
     if (!user)
       return res
         .status(400)
-        .json({ status: 400, message: 'Usuário não encontrado' });
+        .json({ status: 400, message: "Usuário não encontrado" });
 
     return res.json(user);
   }
@@ -45,8 +46,9 @@ class UserController {
     const { id } = req.params;
 
     const userService = new UserService();
+
     const user = await userService.delete(id);
-    if (!user) return res.status(400).json({ message: 'Usuário não existe' });
+    if (!user) return res.status(400).json({ message: "Usuário não existe" });
 
     return res.sendStatus(204);
   }
@@ -59,12 +61,12 @@ class UserController {
 
     const user = await userService.findByPk(id);
 
-    if (!user) return res.status(400).json({ message: 'Usuário inexistente' });
+    if (!user) return res.status(400).json({ message: "Usuário inexistente" });
 
     if (email !== user.email) {
-      const userEmail = await userService.get(email);
+      const userEmail = await userService.get({ email });
       if (userEmail)
-        return res.status(400).json({ message: 'E-mail já cadastrado' });
+        return res.status(400).json({ message: "E-mail já cadastrado" });
     }
 
     await user.update({

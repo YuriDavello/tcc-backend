@@ -1,7 +1,5 @@
 require("dotenv").config();
 
-console.log(process.env.DB_PASS);
-
 module.exports = {
   dialect: "postgres",
   host: process.env.DB_HOST,
@@ -11,7 +9,7 @@ module.exports = {
   port: process.env.DB_PORT,
   seederStorage: "sequelize",
   seederStorageTableName: "SequelizeSeedData",
-  logging: false,
+  logging: console.log,
   define: {
     timestamps: true,
     underscored: true,
