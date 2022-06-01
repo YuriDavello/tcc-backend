@@ -1,7 +1,7 @@
 import Shelf from "../../models/Shelf";
 import ShelfService from "./service";
 
-class UserController {
+class ShelfController {
   async create(req, res) {
     const { name, sections, type, code } = req.body;
 
@@ -39,7 +39,7 @@ class UserController {
         .status(400)
         .json({ status: 400, message: "Prateleira não encontrada" });
 
-    return res.json(user);
+    return res.json(shelf);
   }
 
   async delete(req, res) {
@@ -83,4 +83,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default new ShelfController();

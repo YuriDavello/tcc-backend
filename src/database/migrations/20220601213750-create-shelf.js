@@ -14,9 +14,11 @@ module.exports = {
       code: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       sections: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       type: {
         type: Sequelize.INTEGER,

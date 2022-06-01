@@ -62,7 +62,7 @@ class ShelfService {
 
   async list() {
     const shelves = await Shelf.findAll({
-      order: [["type", "ASC"]],
+      order: [["name", "ASC"]],
     });
     return shelves;
   }

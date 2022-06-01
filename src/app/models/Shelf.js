@@ -1,27 +1,34 @@
-"use strict";
-const { Model } = require("sequelize");
-module.exports = (sequelize, DataTypes) => {
-  class Shelf extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
+import Sequelize, { Model } from "sequelize";
+
+class Shelf extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+        },
+        name: {
+          type: Sequelize.STRING,
+        },
+        code: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        sections: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      {
+        sequelize,
+      }
+    );
   }
-  Shelf.init(
-    {
-      name: DataTypes.STRING,
-      sections: DataTypes.INTEGER,
-      type: DataTypes.INTEGER,
-      code: DataTypes.STRING,
-    },
-    {
-      sequelize,
-      modelName: "Shelf",
-    }
-  );
-  return Shelf;
-};
+}
+
+export default Shelf;
