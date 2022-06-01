@@ -15,10 +15,8 @@ export default async (req, res, next) => {
 
   try {
     const decodedData = await authService.decrypt(token);
-
-    // req.companyId = decodedData.company.id;
-    // req.company = decodedData.company;
-    // req.userId = decodedData.user.id;
+    req.userId = decodedData.user.id;
+    req.userType = decodedData.user.userType;
     req.user = decodedData.user;
 
     return next();
