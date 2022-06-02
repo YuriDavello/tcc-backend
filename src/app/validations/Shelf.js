@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const { name, sections, type, code } = req.body;
+  const { name, sections, shelfType, code } = req.body;
 
   if (name === "" || name === null || name === undefined)
     return res.status(400).json({
@@ -20,7 +20,7 @@ export const store = (req, res, next) => {
       message: "Seção(ões) da prateleira não informada(s)",
     });
 
-  if (type === "" || type === null || type === undefined)
+  if (shelfType === "" || shelfType === null || shelfType === undefined)
     return res.status(400).json({
       status: 400,
       message: "Tipo da prateleira não informado",

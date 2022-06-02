@@ -11,6 +11,7 @@ class Shelf extends Model {
         },
         name: {
           type: Sequelize.STRING,
+          allowNull: false,
         },
         code: {
           type: Sequelize.STRING,
@@ -21,13 +22,17 @@ class Shelf extends Model {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        type: Sequelize.INTEGER,
-        allowNull: false,
+        shelfType: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
       },
       {
         sequelize,
       }
     );
+
+    return this;
   }
 }
 

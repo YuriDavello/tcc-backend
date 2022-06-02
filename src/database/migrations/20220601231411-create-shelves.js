@@ -1,15 +1,14 @@
-"use strict";
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Shelves", {
+  up: (queryInterface, Sequelize) => {
+    const Shelves = queryInterface.createTable("shelves", {
       id: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       code: {
         type: Sequelize.STRING,
@@ -20,21 +19,19 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      type: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
+      shelf_type: Sequelize.INTEGER,
       created_at: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
       },
       updated_at: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
       },
     });
+
+    return Shelves;
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Shelves");
-  },
+
+  down: (queryInterface) => queryInterface.dropTable("shelves"),
 };

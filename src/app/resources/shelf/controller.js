@@ -2,29 +2,31 @@ import Shelf from "../../models/Shelf";
 import ShelfService from "./service";
 
 class ShelfController {
+  async list(req, res) {
+    const shelfService = new ShelfService();
+    const shelves = await shelfService.list();
+    res.json(shelves);
+  }
+
   async create(req, res) {
-    const { name, sections, type, code } = req.body;
+    const { name, code, sections, shelfType } = req.body;
 
     const shelfService = new ShelfService();
 
     const shelf = await shelfService.get({ code });
     if (shelf)
-      return res.status(400).json({ message: "Código já cadastrado!" });
+      return res
+        .status(400)
+        .json({ message: "Código já pertence à outra prateleira" });
 
-    const newShelf = await userService.create({
+    const newShelf = await shelfService.create({
       name,
-      sections,
       code,
-      type,
+      sections,
+      shelfType,
     });
 
     return res.json(newShelf);
-  }
-
-  async list(req, res) {
-    const shelfService = new ShelfService();
-    const shelves = await shelfService.list();
-    res.json(shelves);
   }
 
   async get(req, res) {
@@ -70,7 +72,7 @@ class ShelfController {
       if (shelfCode)
         return res
           .status(400)
-          .json({ message: "Código já existente em outra prateleira" });
+          .json({ message: "Outra prateleira já possui esse código" });
     }
 
     await shelf.update({
