@@ -9,10 +9,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      code: {
-        type: Sequelize.STRING,
-        allowNull: false,
         unique: true,
       },
       sections: {

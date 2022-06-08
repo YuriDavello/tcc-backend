@@ -9,19 +9,18 @@ class ShelfController {
   }
 
   async create(req, res) {
-    const { name, code, sections, shelfType } = req.body;
+    const { name, sections, shelfType } = req.body;
 
     const shelfService = new ShelfService();
 
-    const shelf = await shelfService.get({ code });
+    const shelf = await shelfService.get({ name });
     if (shelf)
       return res
         .status(400)
-        .json({ message: "Código já pertence à outra prateleira" });
+        .json({ message: "Nome já pertence à outra prateleira" });
 
     const newShelf = await shelfService.create({
       name,
-      code,
       sections,
       shelfType,
     });
@@ -58,7 +57,7 @@ class ShelfController {
 
   async update(req, res) {
     const { id } = req.params;
-    const { code } = req.body;
+    const { name } = req.body;
 
     const shelfService = new ShelfService();
 
@@ -67,12 +66,12 @@ class ShelfController {
     if (!shelf)
       return res.status(400).json({ message: "Prateleira inexistente" });
 
-    if (code !== shelf.code) {
-      const shelfCode = await shelfService.get({ code });
-      if (shelfCode)
+    if (name !== shelf.name) {
+      const shelfName = await shelfService.get({ name });
+      if (shelfName)
         return res
           .status(400)
-          .json({ message: "Outra prateleira já possui esse código" });
+          .json({ message: "Outra prateleira já possui esse nome" });
     }
 
     await shelf.update({

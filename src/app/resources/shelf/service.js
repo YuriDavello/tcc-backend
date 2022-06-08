@@ -1,10 +1,10 @@
 import Shelf from "../../models/Shelf";
 
 class ShelfService {
-  async get({ code }) {
+  async get({ name }) {
     const shelf = await Shelf.findOne({
       where: {
-        code,
+        name,
       },
     });
     return shelf;
@@ -24,12 +24,11 @@ class ShelfService {
     return shelves;
   }
 
-  async create({ name, sections, code, shelfType }, transaction) {
+  async create({ name, sections, shelfType }, transaction) {
     const newShelf = await Shelf.create(
       {
         name,
         sections,
-        code,
         shelfType,
       },
       {
@@ -48,12 +47,11 @@ class ShelfService {
     return true;
   }
 
-  async update({ id, name, sections, code, shelfType }, transaction) {
+  async update({ id, name, sections, shelfType }, transaction) {
     const shelfUpdated = await Shelf.update(
       {
         name,
         sections,
-        code,
         shelfType,
       },
       {
