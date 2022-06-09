@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Controller from "./controller";
 import * as ShelfValidations from "../../validations/Shelf";
-import AuthMiddleware from "../../middlewares/AuthMiddleware";
+// import AuthMiddleware from "../../middlewares/AuthMiddleware";
 
 const routes = new Router();
 
