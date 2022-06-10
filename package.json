@@ -13,7 +13,7 @@
     "seed": "npx sequelize db:seed:all --debug",
     "seed:undo": "npx sequelize db:seed:undo --debug",
     "seed:undo:all": "npx sequelize db:seed:undo:all --debug",
-    "start": "node dist/server.js",
+    "start": "yarn build && yarn dev",
     "dev": "nodemon --inspect=7000 src/server.js"
   },
   "author": "yuri",
