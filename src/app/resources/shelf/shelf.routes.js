@@ -5,6 +5,8 @@ import AuthMiddleware from "../../middlewares/AuthMiddleware";
 
 const routes = new Router();
 
+routes.use(AuthMiddleware);
+
 routes.get("/shelves", Controller.list);
 routes.get("/shelves/:id", Controller.get);
 routes.post("/shelves", ShelfValidations.store, Controller.create);
