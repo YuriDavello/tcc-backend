@@ -11,8 +11,6 @@ export default async (req, res, next) => {
 
   const [, token] = authHeader.split(" ");
 
-  const authService = new AuthService();
-
   try {
     const decodedData = await authService.decrypt(token);
     req.userId = decodedData.user.id;
