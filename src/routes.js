@@ -8,6 +8,6 @@ const routes = new Router();
 routes.use(UserRoutes);
 routes.use(ShelfRoutes);
 
-routes.get("/getUserByToken", GetUserByToken.getUser);
+routes.get("/getUserByToken/:token", GetUserByToken.getUser);
 
 export default routes;
