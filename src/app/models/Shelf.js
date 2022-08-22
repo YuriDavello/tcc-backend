@@ -4,24 +4,9 @@ class Shelf extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: {
-          type: Sequelize.INTEGER,
-          autoIncrement: true,
-          primaryKey: true,
-        },
-        name: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          unique: true,
-        },
-        sections: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
-        shelfType: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
+        name: Sequelize.STRING,
+        floors: Sequelize.INTEGER,
+        shelfType: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -29,6 +14,13 @@ class Shelf extends Model {
     );
 
     return this;
+  }
+
+  static associate(models) {
+    this.hasMany(models.Floor, {
+      foreignKey: "shelf_id",
+      as: "shelf",
+    });
   }
 }
 

@@ -9,7 +9,7 @@ class ShelfController {
   }
 
   async create(req, res) {
-    const { name, sections, shelfType } = req.body;
+    const { name, floors, shelfType } = req.body;
 
     const shelfService = new ShelfService();
 
@@ -21,7 +21,7 @@ class ShelfController {
 
     const newShelf = await shelfService.create({
       name,
-      sections,
+      floors,
       shelfType,
     });
 

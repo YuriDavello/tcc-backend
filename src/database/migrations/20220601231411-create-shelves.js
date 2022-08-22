@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      sections: {
+      floors: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

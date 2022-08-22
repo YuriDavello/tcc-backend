@@ -24,11 +24,11 @@ class ShelfService {
     return shelves;
   }
 
-  async create({ name, sections, shelfType }, transaction) {
+  async create({ name, floors, shelfType }, transaction) {
     const newShelf = await Shelf.create(
       {
         name,
-        sections,
+        floors,
         shelfType,
       },
       {
@@ -47,11 +47,11 @@ class ShelfService {
     return true;
   }
 
-  async update({ id, name, sections, shelfType }, transaction) {
+  async update({ id, name, floors, shelfType }, transaction) {
     const shelfUpdated = await Shelf.update(
       {
         name,
-        sections,
+        floors,
         shelfType,
       },
       {
