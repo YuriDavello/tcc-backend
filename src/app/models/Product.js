@@ -8,7 +8,6 @@ class Product extends Model {
         category: Sequelize.STRING,
         total: Sequelize.INTEGER,
         weight: Sequelize.FLOAT,
-        validTill: Sequelize.DATE,
         sectorId: Sequelize.INTEGER,
       },
       {
@@ -23,6 +22,11 @@ class Product extends Model {
     this.belongsTo(models.Sector, {
       foreignKey: "sector_id",
       as: "sector",
+    });
+
+    this.belongsTo(models.Inventory, {
+      foreignKey: "inventory_id",
+      as: "inventory",
     });
   }
 }
