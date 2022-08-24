@@ -24,9 +24,9 @@ class Product extends Model {
       as: "sector",
     });
 
-    this.belongsTo(models.Inventory, {
-      foreignKey: "inventory_id",
-      as: "inventory",
+    this.hasMany(models.Inventory, {
+      foreignKey: "product_id",
+      as: "product",
     });
   }
 }

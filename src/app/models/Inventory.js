@@ -7,6 +7,7 @@ class Inventory extends Model {
         batch: Sequelize.STRING,
         quantity: Sequelize.INTEGER,
         validTill: Sequelize.DATE,
+        productId: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -17,9 +18,9 @@ class Inventory extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Product, {
-      foreignKey: "inventory_id",
-      as: "inventory",
+    this.belongsTo(models.Product, {
+      foreignKey: "product_id",
+      as: "product",
     });
   }
 }
