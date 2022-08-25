@@ -4,7 +4,7 @@ class Floor extends Model {
   static init(sequelize) {
     super.init(
       {
-        quantity: Sequelize.INTEGER,
+        numberFloor: Sequelize.INTEGER,
         quantitySectors: Sequelize.INTEGER,
         shelfId: Sequelize.INTEGER,
       },
