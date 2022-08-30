@@ -4,8 +4,7 @@ class Floor extends Model {
   static init(sequelize) {
     super.init(
       {
-        numberFloor: Sequelize.INTEGER,
-        quantitySectors: Sequelize.INTEGER,
+        nameFloor: Sequelize.STRING,
         shelfId: Sequelize.INTEGER,
       },
       {
@@ -19,12 +18,12 @@ class Floor extends Model {
   static associate(models) {
     this.hasMany(models.Sector, {
       foreignKey: "floor_id",
-      as: "floor",
+      as: "sectors",
     });
 
-    this.belongsTo(models.Floor, {
+    this.belongsTo(models.Shelf, {
       foreignKey: "shelf_id",
-      as: "shelf",
+      as: "floors",
     });
   }
 }

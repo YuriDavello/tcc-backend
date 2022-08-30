@@ -1,4 +1,5 @@
 import Shelf from "../../models/Shelf";
+import Floor from "../../models/Floor";
 
 class ShelfService {
   async get({ name }) {
@@ -11,7 +12,16 @@ class ShelfService {
   }
 
   async findByPk(id) {
-    const shelf = await Shelf.findByPk(id);
+    const shelf = await Shelf.findByPk(id, {
+      include: [
+        {
+          model: Floor,
+          as: "floors",
+          attributes: ["id", "nameFloor"],
+        },
+      ],
+      attributes: ["id", "name", "shelfType"],
+    });
     if (!shelf) return false;
 
     return shelf;
@@ -24,17 +34,17 @@ class ShelfService {
     return shelves;
   }
 
-  async create({ name, floors, shelfType }, transaction) {
+  async create({ name, shelfType }, transaction) {
     const newShelf = await Shelf.create(
       {
         name,
-        floors,
         shelfType,
       },
       {
         transaction,
       }
     );
+
     return newShelf;
   }
 
@@ -47,11 +57,10 @@ class ShelfService {
     return true;
   }
 
-  async update({ id, name, floors, shelfType }, transaction) {
+  async update({ id, name, shelfType }, transaction) {
     const shelfUpdated = await Shelf.update(
       {
         name,
-        floors,
         shelfType,
       },
       {

@@ -5,7 +5,6 @@ class Shelf extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        floors: Sequelize.INTEGER,
         shelfType: Sequelize.INTEGER,
       },
       {
@@ -19,7 +18,7 @@ class Shelf extends Model {
   static associate(models) {
     this.hasMany(models.Floor, {
       foreignKey: "shelf_id",
-      as: "shelf",
+      as: "floors",
     });
   }
 }

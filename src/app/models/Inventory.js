@@ -20,7 +20,7 @@ class Inventory extends Model {
   static associate(models) {
     this.belongsTo(models.Product, {
       foreignKey: "product_id",
-      as: "product",
+      as: "inventories",
     });
   }
 }

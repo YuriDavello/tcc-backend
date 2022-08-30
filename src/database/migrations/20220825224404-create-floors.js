@@ -1,17 +1,25 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const Shelves = queryInterface.createTable("shelves", {
+    const Floors = queryInterface.createTable("floors", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      name: {
+      name_floor: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
-      shelf_type: { type: Sequelize.INTEGER, allowNull: false },
+      shelf_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "shelves",
+          key: "id",
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        },
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -22,8 +30,8 @@ module.exports = {
       },
     });
 
-    return Shelves;
+    return Floors;
   },
 
-  down: (queryInterface) => queryInterface.dropTable("shelves"),
+  down: (queryInterface) => queryInterface.dropTable("floors"),
 };

@@ -1,5 +1,5 @@
-import Shelf from "../../models/Shelf";
 import ShelfService from "./service";
+import FloorService from "../floor/service";
 
 class ShelfController {
   async list(req, res) {
@@ -9,7 +9,7 @@ class ShelfController {
   }
 
   async create(req, res) {
-    const { name, floors, shelfType } = req.body;
+    const { name, shelfType, floors } = req.body;
 
     const shelfService = new ShelfService();
 
@@ -21,8 +21,14 @@ class ShelfController {
 
     const newShelf = await shelfService.create({
       name,
-      floors,
       shelfType,
+    });
+
+    const floorService = new FloorService();
+
+    await floorService.create({
+      floors,
+      shelfId: newShelf.id,
     });
 
     return res.json(newShelf);

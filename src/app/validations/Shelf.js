@@ -8,12 +8,6 @@ export const store = (req, res, next) => {
       message: "Nome da prateleira não informado",
     });
 
-  if (floors === "" || floors === null || floors === undefined)
-    return res.status(400).json({
-      status: 400,
-      message: "Seção(ões) da prateleira não informada(s)",
-    });
-
   if (shelfType === "" || shelfType === null || shelfType === undefined)
     return res.status(400).json({
       status: 400,
