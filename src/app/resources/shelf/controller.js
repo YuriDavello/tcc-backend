@@ -63,7 +63,7 @@ class ShelfController {
 
   async update(req, res) {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, floors } = req.body;
 
     const shelfService = new ShelfService();
 
@@ -83,6 +83,15 @@ class ShelfController {
     await shelf.update({
       ...req.body,
     });
+
+    const floorService = new FloorService();
+
+    if (floors) {
+      await floorService.create({
+        floors,
+        shelfId: id,
+      });
+    }
 
     const response = await shelfService.findByPk(id);
 
