@@ -14,22 +14,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      total: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      wight: {
+      price: {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
-      sector_id: {
-        type: Sequelize.INTEGER,
+      weight: {
+        type: Sequelize.FLOAT,
         allowNull: false,
-        references: {
-          model: "sectors",
-          key: "id",
-          onDelete: "CASCADE",
-        },
       },
       created_at: {
         type: Sequelize.DATE,

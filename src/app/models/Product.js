@@ -6,9 +6,8 @@ class Product extends Model {
       {
         name: Sequelize.STRING,
         category: Sequelize.STRING,
-        total: Sequelize.INTEGER,
+        price: Sequelize.FLOAT,
         weight: Sequelize.FLOAT,
-        sectorId: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -19,9 +18,9 @@ class Product extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Sector, {
-      foreignKey: "sector_id",
-      as: "products",
+    this.hasMany(models.Sector, {
+      foreignKey: "product_id",
+      as: "sector",
     });
 
     this.hasMany(models.Inventory, {

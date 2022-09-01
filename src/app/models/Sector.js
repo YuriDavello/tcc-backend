@@ -6,7 +6,10 @@ class Sector extends Model {
       {
         quantityLines: Sequelize.INTEGER,
         quantityColumns: Sequelize.INTEGER,
+        availableQuantity: Sequelize.INTEGER,
+        fitsProducts: Sequelize.INTEGER,
         floorId: Sequelize.INTEGER,
+        productId: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -17,9 +20,9 @@ class Sector extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Product, {
-      foreignKey: "sector_id",
-      as: "products",
+    this.belongsTo(models.Product, {
+      foreignKey: "product_id",
+      as: "sector",
     });
 
     this.belongsTo(models.Floor, {
