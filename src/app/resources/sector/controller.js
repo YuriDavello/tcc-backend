@@ -86,7 +86,7 @@ class SectorController {
       ...rest,
     });
 
-    const response = await sector.findByPk(id);
+    const response = await sectorService.findByPk(id);
 
     return res.json(response);
   }
