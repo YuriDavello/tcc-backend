@@ -3,7 +3,9 @@ import Product from "../../models/Product";
 class ProductService {
   async get({ name }) {
     const product = await Product.findOne({
-      where: name,
+      where: {
+        name,
+      },
     });
 
     if (product) return true;
