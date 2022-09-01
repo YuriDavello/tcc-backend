@@ -24,6 +24,8 @@ class Floor extends Model {
     this.belongsTo(models.Shelf, {
       foreignKey: "shelf_id",
       as: "floors",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     });
   }
 }
