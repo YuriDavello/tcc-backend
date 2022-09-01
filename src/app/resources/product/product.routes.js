@@ -5,10 +5,10 @@ import * as ProductValidations from "../../validations/Product";
 
 const routes = new Router();
 
-// routes.get("/products", Controller.list);
-// routes.get("/products/:id", Controller.get);
+routes.get("/products", Controller.list);
+routes.get("/products/:id", Controller.get);
 routes.post("/products", ProductValidations.store, Controller.create);
-// routes.delete("/products/:id", Controller.delete);
-// routes.put("/products/:id", Controller.update);
+routes.delete("/products/:id", Controller.delete);
+routes.put("/products/:id", Controller.update);
 
 export default routes;

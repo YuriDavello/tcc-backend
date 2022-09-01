@@ -51,22 +51,24 @@ class ProductService {
     return true;
   }
 
-  // async update({ id, quantityLines, quantityColumns }, transaction) {
-  //   const sectorUpdated = await Sector.update(
-  //     {
-  //       quantityLines,
-  //       quantityColumns,
-  //     },
-  //     {
-  //       where: {
-  //         id,
-  //       },
-  //       transaction,
-  //     }
-  //   );
+  async update({ id, name, category, price, weight }, transaction) {
+    const productUpdated = await Product.update(
+      {
+        name,
+        category,
+        price,
+        weight,
+      },
+      {
+        where: {
+          id,
+        },
+        transaction,
+      }
+    );
 
-  //   return sectorUpdated;
-  // }
+    return productUpdated;
+  }
 }
 
 export default ProductService;

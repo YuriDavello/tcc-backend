@@ -29,22 +29,20 @@ class ProductController {
     return res.json(newProduct);
   }
 
-  // async get(req, res) {
-  //   const { id } = req.params;
+  async get(req, res) {
+    const { id } = req.params;
 
-  //   const sectorService = new SectorService();
+    const productService = new ProductService();
 
-  //   const sector = await sectorService.findByPk(id, {
-  //     attributes: ["id", "quantityLines", "quantityColumns"],
-  //   });
+    const product = await productService.findByPk(id);
 
-  //   if (!sector)
-  //     return res
-  //       .status(400)
-  //       .json({ status: 400, message: "Setor não encontrado" });
+    if (!product)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Produto não encontrado" });
 
-  //   return res.json(sector);
-  // }
+    return res.json(product);
+  }
 
   async delete(req, res) {
     const { id } = req.params;
@@ -58,28 +56,24 @@ class ProductController {
     return res.sendStatus(204);
   }
 
-  // async update(req, res) {
-  //   const { id } = req.params;
+  async update(req, res) {
+    const { id } = req.params;
 
-  //   const { productId, productQuantity, ...rest } = req.body;
+    const productService = new ProductService();
 
-  //   //TODO: VALIDAR QUANTOS PRODUTOS TÊM NO ESTOQUE E RETIRAR DE LÁ, SE O PRODUTO EXISTE NO ESTOQUE
-  //   // E SE A QUANTIDADE FOR MENOR QUE A ANTERIOR, DEVOLVER O EXCEDENTE PARA O ESTOQUE
+    const product = await productService.findByPk(id);
 
-  //   const sectorService = new SectorService();
+    if (!product)
+      return res.status(400).json({ message: "Produto inexistente" });
 
-  //   const sector = await sectorService.findByPk(id);
+    await product.update({
+      ...req.body,
+    });
 
-  //   if (!sector) return res.status(400).json({ message: "Setor inexistente" });
+    const response = await productService.findByPk(id);
 
-  //   await sector.update({
-  //     ...rest,
-  //   });
-
-  //   const response = await sectorService.findByPk(id);
-
-  //   return res.json(response);
-  // }
+    return res.json(response);
+  }
 }
 
 export default new ProductController();
