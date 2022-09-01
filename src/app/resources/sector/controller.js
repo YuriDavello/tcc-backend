@@ -12,8 +12,9 @@ class SectorController {
   async create(req, res) {
     const {
       productId,
-      productQuantity,
+      availableQuantity,
       quantityLines,
+      fitsProducts,
       quantityColumns,
       floorId,
     } = req.body;
@@ -35,6 +36,9 @@ class SectorController {
       quantityLines,
       quantityColumns,
       floorId,
+      productId,
+      availableQuantity,
+      fitsProducts,
     });
 
     return res.json(newSector);

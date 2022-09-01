@@ -22,12 +22,25 @@ class SectorService {
     return sectors;
   }
 
-  async create({ floorId, quantityLines, quantityColumns }, transaction) {
+  async create(
+    {
+      floorId,
+      quantityLines,
+      quantityColumns,
+      productId,
+      availableQuantity,
+      fitsProducts,
+    },
+    transaction
+  ) {
     const newSector = await Sector.create(
       {
         floorId,
         quantityLines,
         quantityColumns,
+        productId,
+        availableQuantity,
+        fitsProducts,
       },
       {
         transaction,
