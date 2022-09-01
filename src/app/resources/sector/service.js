@@ -17,16 +17,17 @@ class SectorService {
       where: {
         floorId,
       },
-      attributes: ["id", "nameFloor", "shelfId"],
+      attributes: ["id", "quantityLines", "quantityColumns"],
     });
     return sectors;
   }
 
-  async create({ floorId, sector }, transaction) {
-    const newSector = await Floor.create(
+  async create({ floorId, quantityLines, quantityColumns }, transaction) {
+    const newSector = await Sector.create(
       {
         floorId,
-        ...sector,
+        quantityLines,
+        quantityColumns,
       },
       {
         transaction,
@@ -44,10 +45,11 @@ class SectorService {
     return true;
   }
 
-  async update({ id, sector }, transaction) {
+  async update({ id, quantityLines, quantityColumns }, transaction) {
     const sectorUpdated = await Sector.update(
       {
-        ...sector,
+        quantityLines,
+        quantityColumns,
       },
       {
         where: {

@@ -10,9 +10,13 @@ class SectorController {
   }
 
   async create(req, res) {
-    const { sector, floorId } = req.body;
-
-    const { productId, quantityProduct } = sector;
+    const {
+      productId,
+      productQuantity,
+      quantityLines,
+      quantityColumns,
+      floorId,
+    } = req.body;
 
     const sectorService = new SectorService();
 
@@ -28,8 +32,9 @@ class SectorController {
     //     .json({ status: 400, message: "Produto não encontrado" });
 
     const newSector = await sectorService.create({
+      quantityLines,
+      quantityColumns,
       floorId,
-      ...sector,
     });
 
     return res.json(newSector);
@@ -65,25 +70,23 @@ class SectorController {
 
   async update(req, res) {
     const { id } = req.params;
-    const { sector } = req.body;
 
-    const { productId, productQuantity, ...rest } = sector;
+    const { productId, productQuantity, ...rest } = req.body;
 
     //TODO: VALIDAR QUANTOS PRODUTOS TÊM NO ESTOQUE E RETIRAR DE LÁ, SE O PRODUTO EXISTE NO ESTOQUE
     // E SE A QUANTIDADE FOR MENOR QUE A ANTERIOR, DEVOLVER O EXCEDENTE PARA O ESTOQUE
 
     const sectorService = new SectorService();
 
-    const sectorToUpdate = await sectorService.findByPk(id);
+    const sector = await sectorService.findByPk(id);
 
-    if (!sectorToUpdate)
-      return res.status(400).json({ message: "Setor inexistente" });
+    if (!sector) return res.status(400).json({ message: "Setor inexistente" });
 
-    await sectorToUpdate.update({
+    await sector.update({
       ...rest,
     });
 
-    const response = await sectorToUpdate.findByPk(id);
+    const response = await sector.findByPk(id);
 
     return res.json(response);
   }
