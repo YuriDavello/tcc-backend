@@ -2,12 +2,11 @@ import ProductService from "./service";
 // import ProductService from "../product/service";
 
 class ProductController {
-  // async list(req, res) {
-  //   const { floorId } = req.query;
-  //   const sectorService = new SectorService();
-  //   const sectors = await sectorService.list(floorId);
-  //   res.json(sectors);
-  // }
+  async list(req, res) {
+    const productService = new ProductService();
+    const products = await productService.list();
+    res.json(products);
+  }
 
   async create(req, res) {
     const { name, category, price, weight } = req.body;
@@ -47,16 +46,17 @@ class ProductController {
   //   return res.json(sector);
   // }
 
-  // async delete(req, res) {
-  //   const { id } = req.params;
+  async delete(req, res) {
+    const { id } = req.params;
 
-  //   const sectorService = new SectorService();
+    const productService = new ProductService();
 
-  //   const sector = await sectorService.delete(id);
-  //   if (!sector) return res.status(400).json({ message: "Setor não existe" });
+    const product = await productService.delete(id);
+    if (!product)
+      return res.status(400).json({ message: "Produto não existe" });
 
-  //   return res.sendStatus(204);
-  // }
+    return res.sendStatus(204);
+  }
 
   // async update(req, res) {
   //   const { id } = req.params;

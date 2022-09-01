@@ -6,7 +6,7 @@ class ProductService {
       where: name,
     });
 
-    if (!product) return true;
+    if (product) return true;
 
     return false;
   }
@@ -18,16 +18,12 @@ class ProductService {
     return product;
   }
 
-  // async list(floorId) {
-  //   const sectors = await Sector.findAll({
-  //     order: [["id", "ASC"]],
-  //     where: {
-  //       floorId,
-  //     },
-  //     attributes: ["id", "quantityLines", "quantityColumns"],
-  //   });
-  //   return sectors;
-  // }
+  async list() {
+    const products = await Product.findAll({
+      order: [["id", "ASC"]],
+    });
+    return products;
+  }
 
   async create({ name, category, price, weight }, transaction) {
     const newProduct = await Product.create(
@@ -44,14 +40,14 @@ class ProductService {
     return newProduct;
   }
 
-  // async delete(id, transaction) {
-  //   const sector = await Sector.findByPk(id);
-  //   if (!sector) return false;
+  async delete(id, transaction) {
+    const product = await Product.findByPk(id);
+    if (!product) return false;
 
-  //   await Sector.destroy({ where: { id }, transaction });
+    await Product.destroy({ where: { id }, transaction });
 
-  //   return true;
-  // }
+    return true;
+  }
 
   // async update({ id, quantityLines, quantityColumns }, transaction) {
   //   const sectorUpdated = await Sector.update(
