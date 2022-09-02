@@ -25,6 +25,12 @@ class SectorService {
         floorId,
       },
       attributes: ["id", "quantityLines", "quantityColumns"],
+      include: [
+        {
+          model: Product,
+          as: "products",
+        },
+      ],
     });
     return sectors;
   }
