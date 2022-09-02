@@ -20,7 +20,7 @@ class Product extends Model {
   static associate(models) {
     this.hasMany(models.Sector, {
       foreignKey: "product_id",
-      as: "sector",
+      as: "products",
     });
 
     this.hasMany(models.Inventory, {
