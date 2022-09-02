@@ -32,9 +32,7 @@ class FloorController {
 
     const floorService = new FloorService();
 
-    const floor = await floorService.findByPk(id, {
-      attributes: ["id", "nameFloor", "shelfId"],
-    });
+    const floor = await floorService.findByPk(id);
 
     if (!floor)
       return res

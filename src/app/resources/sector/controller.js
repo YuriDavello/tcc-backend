@@ -49,9 +49,7 @@ class SectorController {
 
     const sectorService = new SectorService();
 
-    const sector = await sectorService.findByPk(id, {
-      attributes: ["id", "quantityLines", "quantityColumns"],
-    });
+    const sector = await sectorService.findByPk(id);
 
     if (!sector)
       return res

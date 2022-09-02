@@ -1,10 +1,17 @@
 import Sector from "../../models/Sector";
+import Product from "../../models/Product";
 
 class SectorService {
   async findByPk(id) {
     //TODO: INCLUDE DO PRODUTO NO SETOR E A QUANTIDADE
     const sector = await Sector.findByPk(id, {
       attributes: ["id", "quantityLines", "quantityColumns"],
+      include: [
+        {
+          model: Product,
+          as: "products",
+        },
+      ],
     });
     if (!sector) return false;
 
