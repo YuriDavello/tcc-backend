@@ -22,7 +22,7 @@ class Sector extends Model {
   static associate(models) {
     this.belongsTo(models.Product, {
       foreignKey: "product_id",
-      as: "products",
+      as: "product",
     });
 
     this.belongsTo(models.Floor, {

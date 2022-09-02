@@ -1,5 +1,6 @@
 import Shelf from "../../models/Shelf";
 import Floor from "../../models/Floor";
+import Sector from "../../models/Sector";
 
 class ShelfService {
   async get({ name }) {
@@ -18,6 +19,12 @@ class ShelfService {
           model: Floor,
           as: "floors",
           attributes: ["id", "nameFloor"],
+          include: [
+            {
+              model: Sector,
+              as: "sectors",
+            },
+          ],
         },
       ],
       attributes: ["id", "name", "shelfType"],

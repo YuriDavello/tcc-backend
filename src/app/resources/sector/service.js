@@ -28,7 +28,7 @@ class SectorService {
       include: [
         {
           model: Product,
-          as: "products",
+          as: "product",
           attributes: ["name"],
         },
       ],
