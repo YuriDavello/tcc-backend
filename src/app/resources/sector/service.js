@@ -29,6 +29,7 @@ class SectorService {
         {
           model: Product,
           as: "products",
+          attributes: ["name"],
         },
       ],
     });
