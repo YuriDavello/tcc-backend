@@ -1,4 +1,5 @@
 import Product from "../../models/Product";
+import Sequelize from "sequelize";
 
 class ProductService {
   async get({ name }) {
@@ -20,9 +21,16 @@ class ProductService {
     return product;
   }
 
-  async list() {
+  async list({ filter }) {
     const products = await Product.findAll({
       order: [["id", "ASC"]],
+      where: {
+        [Sequelize.Op.or]: [
+          Sequelize.where(Sequelize.fn("lower", Sequelize.col("name")), {
+            [Sequelize.Op.like]: `%${filter || ""}%`,
+          }),
+        ],
+      },
     });
     return products;
   }

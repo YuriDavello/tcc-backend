@@ -3,8 +3,9 @@ import ProductService from "./service";
 
 class ProductController {
   async list(req, res) {
+    const { $filter } = req.query;
     const productService = new ProductService();
-    const products = await productService.list();
+    const products = await productService.list({ filter: $filter });
     res.json(products);
   }
 
