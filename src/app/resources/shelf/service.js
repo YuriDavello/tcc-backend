@@ -28,6 +28,7 @@ class ShelfService {
         },
       ],
       attributes: ["id", "name", "shelfType"],
+      order: [[{ model: Floor, as: "floors" }, "id"]],
     });
     if (!shelf) return false;
 

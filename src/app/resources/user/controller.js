@@ -63,7 +63,7 @@ class UserController {
 
     if (!user) return res.status(400).json({ message: "Usuário inexistente" });
 
-    if (email !== user.email) {
+    if (email && email !== user.email) {
       const userEmail = await userService.get({ email });
       if (userEmail)
         return res.status(400).json({ message: "E-mail já cadastrado" });

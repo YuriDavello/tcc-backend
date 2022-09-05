@@ -3,7 +3,7 @@ import SectorService from "./service";
 
 class SectorController {
   async list(req, res) {
-    const { floorId } = req.query;
+    const { floorId } = req.body;
     const sectorService = new SectorService();
     const sectors = await sectorService.list(floorId);
     res.json(sectors);

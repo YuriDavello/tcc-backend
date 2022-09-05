@@ -6,6 +6,7 @@ import SectorRoutes from "./app/resources/sector/sector.routes";
 import ProductRoutes from "./app/resources/product/product.routes";
 import InventoryRoutes from "./app/resources/inventory/inventory.routes";
 import GetUserByToken from "./app/controllers/getUserByToken";
+import MappedController from "./app/controllers/MappedController";
 
 const routes = new Router();
 
@@ -16,6 +17,7 @@ routes.use(SectorRoutes);
 routes.use(ProductRoutes);
 routes.use(InventoryRoutes);
 
+routes.get("/mappedProduct/:productId", MappedController.mapped);
 routes.get("/getUserByToken/:token", GetUserByToken.getUser);
 
 export default routes;
