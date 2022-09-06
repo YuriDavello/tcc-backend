@@ -29,7 +29,9 @@ class MappedService {
     });
     if (!shelf) return false;
 
-    return shelf[0].id;
+    return {
+      shelfId: shelf[0].id,
+    };
   }
 }
 
