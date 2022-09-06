@@ -29,7 +29,7 @@ class MappedService {
     });
     if (!shelf) return false;
 
-    return shelf.id;
+    return shelf[0].id;
   }
 }
 
