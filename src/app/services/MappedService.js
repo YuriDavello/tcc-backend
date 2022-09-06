@@ -29,12 +29,7 @@ class MappedService {
     });
     if (!shelf) return false;
 
-    return {
-      product,
-      sectors,
-      floors,
-      shelf,
-    };
+    return shelf.id;
   }
 }
 
