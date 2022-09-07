@@ -2,7 +2,7 @@ import FloorService from "./service";
 
 class FloorController {
   async list(req, res) {
-    const { shelfId } = req.body;
+    const { shelfId } = req.params;
     const floorService = new FloorService();
     const floors = await floorService.list(shelfId);
     res.json(floors);
