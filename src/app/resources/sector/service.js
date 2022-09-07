@@ -71,23 +71,6 @@ class SectorService {
 
     return true;
   }
-
-  async update({ id, quantityLines, quantityColumns }, transaction) {
-    const sectorUpdated = await Sector.update(
-      {
-        quantityLines,
-        quantityColumns,
-      },
-      {
-        where: {
-          id,
-        },
-        transaction,
-      }
-    );
-
-    return sectorUpdated;
-  }
 }
 
 export default SectorService;

@@ -58,25 +58,6 @@ class ProductService {
 
     return true;
   }
-
-  async update({ id, name, category, price, weight }, transaction) {
-    const productUpdated = await Product.update(
-      {
-        name,
-        category,
-        price,
-        weight,
-      },
-      {
-        where: {
-          id,
-        },
-        transaction,
-      }
-    );
-
-    return productUpdated;
-  }
 }
 
 export default ProductService;

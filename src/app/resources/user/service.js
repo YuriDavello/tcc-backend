@@ -42,26 +42,6 @@ class UserService {
     return true;
   }
 
-  async update({ id, name, password, email, userType }, transaction) {
-    const userUpdated = await User.update(
-      {
-        name,
-        password,
-        email,
-        rawPassword: password,
-        userType,
-      },
-      {
-        where: {
-          id,
-        },
-        transaction,
-      }
-    );
-
-    return userUpdated;
-  }
-
   async list() {
     const users = await User.findAll({
       order: [["name", "ASC"]],

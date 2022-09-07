@@ -5,10 +5,10 @@ import * as InventoryValidations from "../../validations/Inventory";
 
 const routes = new Router();
 
-// routes.get("/sectors", Controller.list);
-// routes.get("/sectors/:id", Controller.get);
+routes.get("/inventories", Controller.list);
+routes.get("/inventories/:id", Controller.get);
 routes.post("/inventories", InventoryValidations.store, Controller.create);
-// routes.delete("/sectors/:id", Controller.delete);
-// routes.put("/sectors/:id", Controller.update);
+routes.delete("/inventories/:id", Controller.delete);
+routes.put("/inventories/:id", Controller.update);
 
 export default routes;

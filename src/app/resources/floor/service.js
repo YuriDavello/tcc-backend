@@ -70,22 +70,6 @@ class FloorService {
 
     return true;
   }
-
-  async update({ id, nameFloor }, transaction) {
-    const floorUpdated = await Floor.update(
-      {
-        nameFloor,
-      },
-      {
-        where: {
-          id,
-        },
-        transaction,
-      }
-    );
-
-    return floorUpdated;
-  }
 }
 
 export default FloorService;

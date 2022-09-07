@@ -71,23 +71,6 @@ class ShelfService {
 
     return true;
   }
-
-  async update({ id, name, shelfType }, transaction) {
-    const shelfUpdated = await Shelf.update(
-      {
-        name,
-        shelfType,
-      },
-      {
-        where: {
-          id,
-        },
-        transaction,
-      }
-    );
-
-    return shelfUpdated;
-  }
 }
 
 export default ShelfService;

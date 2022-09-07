@@ -2,39 +2,19 @@ import Inventory from "../../models/Inventory";
 import Product from "../../models/Product";
 
 class InventoryService {
-  // async findByPk(id) {
-  //   //TODO: INCLUDE DO PRODUTO NO SETOR E A QUANTIDADE
-  //   const sector = await Sector.findByPk(id, {
-  //     attributes: ["id", "quantityLines", "quantityColumns"],
-  //     include: [
-  //       {
-  //         model: Product,
-  //         as: "products",
-  //       },
-  //     ],
-  //   });
-  //   if (!sector) return false;
+  async findByPk(id) {
+    const inventory = await Inventory.findByPk(id);
+    if (!inventory) return false;
 
-  //   return sector;
-  // }
+    return inventory;
+  }
 
-  // async list(floorId) {
-  //   const sectors = await Sector.findAll({
-  //     order: [["id", "ASC"]],
-  //     where: {
-  //       floorId,
-  //     },
-  //     attributes: ["id", "quantityLines", "quantityColumns"],
-  //     include: [
-  //       {
-  //         model: Product,
-  //         as: "product",
-  //         attributes: ["name"],
-  //       },
-  //     ],
-  //   });
-  //   return sectors;
-  // }
+  async list() {
+    const inventories = await Inventory.findAll({
+      order: [["id", "ASC"]],
+    });
+    return inventories;
+  }
 
   async create({ batch, quantity, validTill, productId }, transaction) {
     const newInventory = await Inventory.create(
@@ -51,31 +31,14 @@ class InventoryService {
     return newInventory;
   }
 
-  // async delete(id, transaction) {
-  //   const sector = await Sector.findByPk(id);
-  //   if (!sector) return false;
+  async delete(id, transaction) {
+    const inventory = await Inventory.findByPk(id);
+    if (!inventory) return false;
 
-  //   await Sector.destroy({ where: { id }, transaction });
+    await Inventory.destroy({ where: { id }, transaction });
 
-  //   return true;
-  // }
-
-  // async update({ id, quantityLines, quantityColumns }, transaction) {
-  //   const sectorUpdated = await Sector.update(
-  //     {
-  //       quantityLines,
-  //       quantityColumns,
-  //     },
-  //     {
-  //       where: {
-  //         id,
-  //       },
-  //       transaction,
-  //     }
-  //   );
-
-  //   return sectorUpdated;
-  // }
+    return true;
+  }
 }
 
 export default InventoryService;
