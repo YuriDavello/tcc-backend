@@ -1,5 +1,6 @@
 import Product from "../../models/Product";
 import Sequelize from "sequelize";
+import Database from "../../../database/index";
 
 class ProductService {
   async get({ name }) {
@@ -32,6 +33,16 @@ class ProductService {
         ],
       },
     });
+
+    return products;
+  }
+
+  async listNonRelatedProducts({ filter }) {
+    const [products] = await Database.connection.query(`
+    SELECT * FROM PRODUCTS
+    WHERE id NOT IN (SELECT PRODUCT_ID FROM SECTORS)
+    AND (UPPER(name) LIKE UPPER('%${filter || ""}%'))
+    `);
     return products;
   }
 
