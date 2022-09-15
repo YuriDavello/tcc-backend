@@ -1,5 +1,7 @@
 import Sector from "../../models/Sector";
 import Product from "../../models/Product";
+import Floor from "../../models/Floor";
+import Shelf from "../../models/Shelf";
 
 class SectorService {
   async findByPk(id) {
@@ -9,8 +11,12 @@ class SectorService {
       include: [
         {
           model: Product,
-          as: "product",
+          as: "products",
         },
+        {
+          model:Floor,
+          as: "floors",
+        }
       ],
     });
     if (!sector) return false;
@@ -28,7 +34,7 @@ class SectorService {
       include: [
         {
           model: Product,
-          as: "product",
+          as: "products",
           attributes: ["name"],
         },
       ],

@@ -27,7 +27,7 @@ class ShelfService {
               include: [
                 {
                   model: Product,
-                  as: "product",
+                  as: "products",
                 },
               ],
             },

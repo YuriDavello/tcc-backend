@@ -12,6 +12,11 @@ class InventoryService {
   async list() {
     const inventories = await Inventory.findAll({
       order: [["id", "ASC"]],
+      include: {
+        model: Product,
+        as: "products",
+        required: true
+      }
     });
     return inventories;
   }
