@@ -1,5 +1,6 @@
 import Inventory from "../../models/Inventory";
 import Product from "../../models/Product";
+import Database from "../../../database/index";
 
 class InventoryService {
   async findByPk(id) {
@@ -9,14 +10,22 @@ class InventoryService {
     return inventory;
   }
 
+  async productTotalQuantity({ productId }) {
+    const totalQuantity = await Database.connection
+      .query(`SELECT SUM(quantity) AS total_quantity FROM inventories
+    WHERE product_id=${productId}`);
+
+    return totalQuantity;
+  }
+
   async list() {
     const inventories = await Inventory.findAll({
       order: [["id", "ASC"]],
       include: {
         model: Product,
         as: "products",
-        required: true
-      }
+        required: true,
+      },
     });
     return inventories;
   }

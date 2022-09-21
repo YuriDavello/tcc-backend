@@ -1,8 +1,9 @@
+import Sequelize from "sequelize";
+
 import Sector from "../../models/Sector";
 import Product from "../../models/Product";
 import Floor from "../../models/Floor";
-import Shelf from "../../models/Shelf";
-
+// import Database from "../../../database/index";
 class SectorService {
   async findByPk(id) {
     //TODO: INCLUDE DO PRODUTO NO SETOR E A QUANTIDADE
@@ -14,9 +15,9 @@ class SectorService {
           as: "products",
         },
         {
-          model:Floor,
+          model: Floor,
           as: "floors",
-        }
+        },
       ],
     });
     if (!sector) return false;
