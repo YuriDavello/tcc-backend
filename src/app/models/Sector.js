@@ -10,7 +10,6 @@ class Sector extends Model {
         fitsQuantity: Sequelize.INTEGER,
         floorId: Sequelize.INTEGER,
         productId: Sequelize.INTEGER,
-        batchId: Sequelize.INTEGER,
       },
       {
         sequelize,

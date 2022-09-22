@@ -1,14 +1,23 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const { batch, quantity, validTill, productId } = req.body;
+  const {
+    code,
+    product_quantity: productQuantity,
+    valid_till: validTill,
+    product_id: productId,
+  } = req.body.batch;
 
-  if (batch === "" || batch === null || batch === undefined)
+  if (code === "" || code === null || code === undefined)
     return res.status(400).json({
       status: 400,
       message: "Lote não informado",
     });
 
-  if (quantity === "" || quantity === null || quantity === undefined)
+  if (
+    productQuantity === "" ||
+    productQuantity === null ||
+    productQuantity === undefined
+  )
     return res.status(400).json({
       status: 400,
       message: "Quantidade não informada",

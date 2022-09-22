@@ -6,6 +6,7 @@ class Batch extends Model {
       {
         code: Sequelize.STRING,
         productId: Sequelize.INTEGER,
+        sectorId: Sequelize.INTEGER,
         productQuantity: Sequelize.INTEGER,
         validTill: Sequelize.DATE,
       },
@@ -24,7 +25,7 @@ class Batch extends Model {
     });
 
     this.belongsTo(models.Sector, {
-      foreignKey: "product_id",
+      foreignKey: "sector_id",
       as: "batch",
     });
   }

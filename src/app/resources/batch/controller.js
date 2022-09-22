@@ -14,7 +14,7 @@ class BatchController {
     const batchService = new BatchService();
 
     const newBatch = await batchService.create({
-      ...batch,
+      batch,
     });
 
     return res.json(newBatch);

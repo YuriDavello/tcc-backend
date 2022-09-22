@@ -9,31 +9,28 @@ class ProductController {
     res.json(products);
   }
 
-  async listNonRelatedProducts(req, res) {
-    const { $filter } = req.query;
-    const productService = new ProductService();
-    const products = await productService.listNonRelatedProducts({
-      filter: $filter,
-    });
-    res.json(products);
-  }
+  // async listNonRelatedProducts(req, res) {
+  //   const { $filter } = req.query;
+  //   const productService = new ProductService();
+  //   const products = await productService.listNonRelatedProducts({
+  //     filter: $filter,
+  //   });
+  //   res.json(products);
+  // }
 
   async create(req, res) {
-    const { name, category, price, weight } = req.body;
+    const { product } = req.body;
 
     const productService = new ProductService();
 
-    const product = await productService.get({ name });
-    if (product)
+    const productExists = await productService.get({ name: product.name });
+    if (productExists)
       return res
         .status(400)
         .json({ message: "Nome já pertence à outro produto" });
 
     const newProduct = await productService.create({
-      name,
-      category,
-      price,
-      weight,
+      product,
     });
 
     return res.json(newProduct);

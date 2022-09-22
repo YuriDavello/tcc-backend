@@ -2,6 +2,9 @@ import Product from "../../models/Product";
 import Sequelize from "sequelize";
 import Database from "../../../database/index";
 
+const props = {
+  attributes: ["id", "name", "category", "price", "weight"],
+};
 class ProductService {
   async get({ name }) {
     const product = await Product.findOne({
@@ -16,7 +19,7 @@ class ProductService {
   }
 
   async findByPk(id) {
-    const product = await Product.findByPk(id);
+    const product = await Product.findByPk(id, { ...props });
     if (!product) return false;
 
     return product;
@@ -32,27 +35,25 @@ class ProductService {
           }),
         ],
       },
+      ...props,
     });
 
     return products;
   }
 
-  async listNonRelatedProducts({ filter }) {
-    const [products] = await Database.connection.query(`
-    SELECT * FROM PRODUCTS
-    WHERE id NOT IN (SELECT PRODUCT_ID FROM SECTORS)
-    AND (UPPER(name) LIKE UPPER('%${filter || ""}%'))
-    `);
-    return products;
-  }
+  // async listNonRelatedProducts({ filter }) {
+  //   const [products] = await Database.connection.query(`
+  //   SELECT * FROM PRODUCTS
+  //   WHERE id NOT IN (SELECT PRODUCT_ID FROM SECTORS)
+  //   AND (UPPER(name) LIKE UPPER('%${filter || ""}%'))
+  //   `);
+  //   return products;
+  // }
 
-  async create({ name, category, price, weight }, transaction) {
+  async create({ product }, transaction) {
     const newProduct = await Product.create(
       {
-        name,
-        category,
-        price,
-        weight,
+        ...product,
       },
       {
         transaction,

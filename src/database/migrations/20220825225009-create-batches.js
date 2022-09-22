@@ -1,36 +1,22 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const Sector = queryInterface.createTable("sectors", {
+    const Batches = queryInterface.createTable("batches", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      quantity_lines: {
+      quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      quantity_columns: {
-        type: Sequelize.INTEGER,
+      batch: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      available_quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      fits_quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      floor_id: {
-        type: Sequelize.INTEGER,
+      valid_till: {
+        type: Sequelize.DATE,
         allowNull: false,
-        references: {
-          model: "floors",
-          key: "id",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        },
       },
       product_id: {
         type: Sequelize.INTEGER,
@@ -42,11 +28,11 @@ module.exports = {
           onDelete: "CASCADE",
         },
       },
-      batch_id: {
+      sector_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: "batches",
+          model: "sectors",
           key: "id",
           onUpdate: "CASCADE",
           onDelete: "CASCADE",
@@ -62,8 +48,8 @@ module.exports = {
       },
     });
 
-    return Sector;
+    return Batches;
   },
 
-  down: (queryInterface) => queryInterface.dropTable("sectors"),
+  down: (queryInterface) => queryInterface.dropTable("batches"),
 };
