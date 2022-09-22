@@ -30,7 +30,7 @@ class FloorService {
     return floors;
   }
 
-  async create({ shelfId, floors = null, nameFloor }, transaction) {
+  async create({ shelfId, floors = null, nameFloor = "" }, transaction) {
     let newFloors;
     if (floors) {
       newFloors = await Promise.all(
