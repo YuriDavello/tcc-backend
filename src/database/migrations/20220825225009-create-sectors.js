@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      fits_products: {
+      fits_quantity: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },

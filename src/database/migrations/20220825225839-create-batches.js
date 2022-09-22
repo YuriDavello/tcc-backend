@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const Inventories = queryInterface.createTable("inventories", {
+    const Batches = queryInterface.createTable("batches", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -38,8 +38,8 @@ module.exports = {
       },
     });
 
-    return Inventories;
+    return Batches;
   },
 
-  down: (queryInterface) => queryInterface.dropTable("inventories"),
+  down: (queryInterface) => queryInterface.dropTable("batches"),
 };

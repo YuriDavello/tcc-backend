@@ -1,13 +1,13 @@
 import Sequelize, { Model } from "sequelize";
 
-class Inventory extends Model {
+class Batch extends Model {
   static init(sequelize) {
     super.init(
       {
-        batch: Sequelize.STRING,
-        quantity: Sequelize.INTEGER,
-        validTill: Sequelize.DATE,
+        code: Sequelize.STRING,
         productId: Sequelize.INTEGER,
+        productQuantity: Sequelize.INTEGER,
+        validTill: Sequelize.DATE,
       },
       {
         sequelize,
@@ -20,9 +20,9 @@ class Inventory extends Model {
   static associate(models) {
     this.belongsTo(models.Product, {
       foreignKey: "product_id",
-      as: "products",
+      as: "batches",
     });
   }
 }
 
-export default Inventory;
+export default Batch;
