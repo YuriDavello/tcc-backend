@@ -42,6 +42,16 @@ module.exports = {
           onDelete: "CASCADE",
         },
       },
+      batch_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "batches",
+          key: "id",
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        },
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

@@ -10,6 +10,7 @@ class Sector extends Model {
         fitsQuantity: Sequelize.INTEGER,
         floorId: Sequelize.INTEGER,
         productId: Sequelize.INTEGER,
+        batchId: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -28,6 +29,11 @@ class Sector extends Model {
     this.belongsTo(models.Floor, {
       foreignKey: "floor_id",
       as: "sectors",
+    });
+
+    this.hasMany(models.Batch, {
+      foreignKey: "batch_id",
+      as: "batches",
     });
   }
 }

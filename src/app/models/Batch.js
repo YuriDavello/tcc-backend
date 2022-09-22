@@ -22,6 +22,11 @@ class Batch extends Model {
       foreignKey: "product_id",
       as: "batches",
     });
+
+    this.belongsTo(models.Sector, {
+      foreignKey: "product_id",
+      as: "batch",
+    });
   }
 }
 
