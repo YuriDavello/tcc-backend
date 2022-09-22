@@ -49,16 +49,10 @@ class ShelfService {
     return shelves;
   }
 
-  async create({ name, shelfType }, transaction) {
-    const newShelf = await Shelf.create(
-      {
-        name,
-        shelfType,
-      },
-      {
-        transaction,
-      }
-    );
+  async create({ shelf }, transaction) {
+    const newShelf = await Shelf.create(shelf, {
+      transaction,
+    });
 
     return newShelf;
   }

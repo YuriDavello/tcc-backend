@@ -9,19 +9,19 @@ class ShelfController {
   }
 
   async create(req, res) {
-    const { name, shelfType, floors } = req.body;
+    const { shelf } = req.body;
+    const { name } = shelf;
 
     const shelfService = new ShelfService();
 
-    const shelf = await shelfService.get({ name });
-    if (shelf)
+    const shelfExists = await shelfService.get({ name });
+    if (shelfExists)
       return res
         .status(400)
         .json({ message: "Nome já pertence à outra prateleira" });
 
     const newShelf = await shelfService.create({
-      name,
-      shelfType,
+      shelf,
     });
 
     const floorService = new FloorService();

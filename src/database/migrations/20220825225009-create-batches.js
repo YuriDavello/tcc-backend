@@ -6,16 +6,8 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      batch: {
+      code: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      valid_till: {
-        type: Sequelize.DATE,
         allowNull: false,
       },
       product_id: {
@@ -37,6 +29,14 @@ module.exports = {
           onUpdate: "CASCADE",
           onDelete: "CASCADE",
         },
+      },
+      product_quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      valid_till: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,

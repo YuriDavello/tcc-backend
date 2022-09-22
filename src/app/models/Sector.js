@@ -31,7 +31,7 @@ class Sector extends Model {
     });
 
     this.hasMany(models.Batch, {
-      foreignKey: "batch_id",
+      foreignKey: "sector_id",
       as: "batches",
     });
   }

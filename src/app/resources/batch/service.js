@@ -4,6 +4,10 @@ import Product from "../../models/Product";
 const props = {
   attributes: ["id", "code", "product_id", "valid_till"],
 };
+
+const props2 = {
+  attributes: ["id", "name", "category", "price", "weight"],
+};
 class BatchService {
   async findByPk(id) {
     const batch = await Batch.findByPk(id, { ...props });
@@ -18,6 +22,7 @@ class BatchService {
       include: {
         model: Product,
         as: "product",
+        ...props2,
       },
       ...props,
     });
@@ -25,14 +30,9 @@ class BatchService {
   }
 
   async create({ batch }, transaction) {
-    const newBatch = await Batch.create(
-      {
-        ...batch,
-      },
-      {
-        transaction,
-      }
-    );
+    const newBatch = await Batch.create(batch, {
+      transaction,
+    });
     return newBatch;
   }
 

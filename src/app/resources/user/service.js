@@ -1,5 +1,8 @@
 import User from "../../models/User";
 
+const props = {
+  attributes: ["id", "name", "email", "userType"],
+};
 class UserService {
   async get({ email }) {
     const user = await User.findOne({
@@ -11,25 +14,16 @@ class UserService {
   }
 
   async findByPk(id) {
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, { ...props });
     if (!user) return false;
 
     return user;
   }
 
-  async create({ name, password, email, userType }, transaction) {
-    const newUser = await User.create(
-      {
-        name,
-        password,
-        email,
-        rawPassword: password,
-        userType,
-      },
-      {
-        transaction,
-      }
-    );
+  async create({ user }, transaction) {
+    const newUser = await User.create(user, {
+      transaction,
+    });
     return newUser;
   }
 
@@ -45,6 +39,7 @@ class UserService {
   async list() {
     const users = await User.findAll({
       order: [["name", "ASC"]],
+      ...props,
     });
     return users;
   }

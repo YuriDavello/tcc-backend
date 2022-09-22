@@ -5,24 +5,9 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: {
-          type: Sequelize.INTEGER,
-          autoIncrement: true,
-          primaryKey: true,
-        },
-        name: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-        email: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          unique: true,
-        },
-        password: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
+        name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        password: Sequelize.STRING,
         userType: Sequelize.INTEGER,
         rawPassword: Sequelize.VIRTUAL,
       },

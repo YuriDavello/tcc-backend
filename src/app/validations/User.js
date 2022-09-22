@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const { name, password, email } = req.body;
+  const { name, password, email } = req.body.user;
 
   if (name === "" || name === null || name === undefined)
     return res.status(400).json({
