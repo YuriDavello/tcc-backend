@@ -4,7 +4,7 @@ class Floor extends Model {
   static init(sequelize) {
     super.init(
       {
-        nameFloor: Sequelize.STRING,
+        floorName: Sequelize.STRING,
         shelfId: Sequelize.INTEGER,
       },
       {

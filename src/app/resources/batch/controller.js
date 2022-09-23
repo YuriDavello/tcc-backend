@@ -1,5 +1,5 @@
 import BatchService from "./service";
-// import ProductService from "../product/service";
+import ProductService from "../product/service";
 
 class BatchController {
   async list(req, res) {
@@ -10,8 +10,22 @@ class BatchController {
 
   async create(req, res) {
     const { batch } = req.body;
+    const { code, productId } = batch;
 
     const batchService = new BatchService();
+    const productService = new ProductService();
+
+    const productExists = await productService.findByPk(productId);
+
+    if (!productExists)
+      return res.status(400).json({ message: "Produto do lote não existe" });
+
+    const batchExists = await batchService.getByCode({ code });
+
+    if (batchExists.length > 0)
+      return res
+        .status(400)
+        .json({ message: "Outro lote já possui esse código" });
 
     const newBatch = await batchService.create({
       batch,

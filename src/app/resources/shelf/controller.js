@@ -73,8 +73,8 @@ class ShelfController {
       return res.status(400).json({ message: "Prateleira inexistente" });
 
     if (name !== shelf.name) {
-      const shelfName = await shelfService.get({ name });
-      if (shelfName)
+      const shelfExists = await shelfService.get({ name });
+      if (shelfExists)
         return res
           .status(400)
           .json({ message: "Outra prateleira já possui esse nome" });

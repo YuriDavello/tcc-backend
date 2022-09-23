@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const { quantityLines, quantityColumns, floorId } = req.body;
+  const { quantityLines, quantityColumns, floorId } = req.body.sector;
 
   if (
     quantityLines === "" ||

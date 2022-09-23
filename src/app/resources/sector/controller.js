@@ -1,5 +1,5 @@
 import SectorService from "./service";
-// import ProductService from "../product/service";
+import ProductService from "../product/service";
 
 class SectorController {
   async list(req, res) {
@@ -10,35 +10,26 @@ class SectorController {
   }
 
   async create(req, res) {
-    const {
-      productId,
-      availableQuantity,
-      quantityLines,
-      fitsProducts,
-      quantityColumns,
-      floorId,
-    } = req.body;
+    const { sector } = req.body;
+    const { productId, fitsQuantity } = sector;
 
     const sectorService = new SectorService();
+    const productService = new ProductService();
 
-    //TODO: VER SE O PRODUTO EXISTE, SE EXISTE QUANTIDADE NO ESTOQUE E
+    //TODO: SE EXISTE QUANTIDADE NO ESTOQUE E
     //DAR BAIXA NA QUANTIDADE NO ESTOQUE
-    // const productService = new ProductService();
 
-    // const product = await productService.findByPk(productId);
+    if (productId) {
+      const product = await productService.findByPk(productId);
 
-    // if (!product)
-    //   return res
-    //     .status(400)
-    //     .json({ status: 400, message: "Produto não encontrado" });
+      if (!product)
+        return res
+          .status(400)
+          .json({ status: 400, message: "Produto não encontrado" });
+    }
 
     const newSector = await sectorService.create({
-      quantityLines,
-      quantityColumns,
-      floorId,
-      productId,
-      availableQuantity,
-      fitsProducts,
+      sector,
     });
 
     return res.json(newSector);

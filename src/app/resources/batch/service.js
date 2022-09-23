@@ -9,6 +9,13 @@ const props2 = {
   attributes: ["id", "name", "category", "price", "weight"],
 };
 class BatchService {
+  async getByCode({ code }) {
+    const batch = await Batch.findAll({
+      where: { code },
+    });
+
+    return batch;
+  }
   async findByPk(id) {
     const batch = await Batch.findByPk(id, { ...props });
     if (!batch) return false;

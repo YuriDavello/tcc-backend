@@ -3,21 +3,34 @@ import Product from "../../models/Product";
 import Floor from "../../models/Floor";
 import Shelf from "../../models/Shelf";
 
+const props = {
+  attributes: ["id", "quantityLines", "quantityColumns"],
+};
+
+const props2 = {
+  attributes: ["id", "name", "category", "price", "weight"],
+};
+
+const props3 = {
+  attributes: ["id", "floorName", "shelfId"],
+};
 class SectorService {
   async findByPk(id) {
     //TODO: INCLUDE DO PRODUTO NO SETOR E A QUANTIDADE
     const sector = await Sector.findByPk(id, {
-      attributes: ["id", "quantityLines", "quantityColumns"],
       include: [
         {
           model: Product,
           as: "products",
+          ...props2,
         },
         {
-          model:Floor,
-          as: "floors",
-        }
+          model: Floor,
+          as: "floor",
+          ...props3,
+        },
       ],
+      ...props,
     });
     if (!sector) return false;
 
@@ -30,7 +43,6 @@ class SectorService {
       where: {
         floorId,
       },
-      attributes: ["id", "quantityLines", "quantityColumns"],
       include: [
         {
           model: Product,
@@ -38,34 +50,15 @@ class SectorService {
           attributes: ["name"],
         },
       ],
+      ...props,
     });
     return sectors;
   }
 
-  async create(
-    {
-      floorId,
-      quantityLines,
-      quantityColumns,
-      productId,
-      availableQuantity,
-      fitsProducts,
-    },
-    transaction
-  ) {
-    const newSector = await Sector.create(
-      {
-        floorId,
-        quantityLines,
-        quantityColumns,
-        productId,
-        availableQuantity,
-        fitsProducts,
-      },
-      {
-        transaction,
-      }
-    );
+  async create({ sector }, transaction) {
+    const newSector = await Sector.create(sector, {
+      transaction,
+    });
     return newSector;
   }
 

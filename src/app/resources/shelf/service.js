@@ -3,6 +3,18 @@ import Floor from "../../models/Floor";
 import Sector from "../../models/Sector";
 import Product from "../../models/Product";
 
+const props = {
+  attributes: ["id", "name", "shelfType"],
+};
+
+const props2 = {
+  attributes: ["id", "quantityLines", "quantityColumns", "fitsQuantity"],
+};
+
+const props3 = {
+  attributes: ["id", "name", "category", "price", "weight"],
+};
+
 class ShelfService {
   async get({ name }) {
     const shelf = await Shelf.findOne({
@@ -19,22 +31,24 @@ class ShelfService {
         {
           model: Floor,
           as: "floors",
-          attributes: ["id", "nameFloor"],
+          attributes: ["id", "floorName"],
           include: [
             {
               model: Sector,
               as: "sectors",
+              ...props2,
               include: [
                 {
                   model: Product,
                   as: "products",
+                  ...props3,
                 },
               ],
             },
           ],
         },
       ],
-      attributes: ["id", "name", "shelfType"],
+      ...props,
       order: [[{ model: Floor, as: "floors" }, "id"]],
     });
     if (!shelf) return false;
@@ -45,6 +59,7 @@ class ShelfService {
   async list() {
     const shelves = await Shelf.findAll({
       order: [["name", "ASC"]],
+      ...props,
     });
     return shelves;
   }

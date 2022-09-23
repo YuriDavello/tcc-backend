@@ -9,11 +9,11 @@ class FloorController {
   }
 
   async create(req, res) {
-    const { nameFloor, shelfId } = req.body;
+    const { floorName, shelfId } = req.body;
 
     const floorService = new FloorService();
 
-    const floor = await floorService.get({ nameFloor });
+    const floor = await floorService.get({ floorName });
     if (floor)
       return res
         .status(400)
@@ -21,7 +21,7 @@ class FloorController {
 
     const newFloor = await floorService.create({
       shelfId,
-      nameFloor,
+      floorName,
     });
 
     return res.json(newFloor);
@@ -55,7 +55,7 @@ class FloorController {
 
   async update(req, res) {
     const { id } = req.params;
-    const { nameFloor } = req.body;
+    const { floorName } = req.body;
 
     const floorService = new FloorService();
 
@@ -63,9 +63,9 @@ class FloorController {
 
     if (!floor) return res.status(400).json({ message: "Andar inexistente" });
 
-    if (nameFloor !== floor.nameFloor) {
-      const floorName = await floorService.get({ nameFloor });
-      if (floorName)
+    if (floorName !== floor.floorName) {
+      const floorExists = await floorService.get({ floorName });
+      if (floorExists)
         return res
           .status(400)
           .json({ message: "Outro andar já possui esse nome" });
