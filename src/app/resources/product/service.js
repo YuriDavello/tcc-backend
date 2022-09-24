@@ -41,14 +41,14 @@ class ProductService {
     return products;
   }
 
-  // async listNonRelatedProducts({ filter }) {
-  //   const [products] = await Database.connection.query(`
-  //   SELECT * FROM PRODUCTS
-  //   WHERE id NOT IN (SELECT PRODUCT_ID FROM SECTORS)
-  //   AND (UPPER(name) LIKE UPPER('%${filter || ""}%'))
-  //   `);
-  //   return products;
-  // }
+  async listNonRelatedProducts({ filter }) {
+    const [products] = await Database.connection.query(`
+    SELECT * FROM PRODUCTS
+    WHERE id NOT IN (SELECT PRODUCT_ID FROM SECTORS)
+    AND (UPPER(name) LIKE UPPER('%${filter || ""}%'))
+    `);
+    return products;
+  }
 
   async create({ product }, transaction) {
     const newProduct = await Product.create(product, {
