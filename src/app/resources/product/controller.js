@@ -9,14 +9,14 @@ class ProductController {
     res.json(products);
   }
 
-  // async listNonRelatedProducts(req, res) {
-  //   const { $filter } = req.query;
-  //   const productService = new ProductService();
-  //   const products = await productService.listNonRelatedProducts({
-  //     filter: $filter,
-  //   });
-  //   res.json(products);
-  // }
+  async listNonRelatedProducts(req, res) {
+    const { $filter } = req.query;
+    const productService = new ProductService();
+    const products = await productService.listNonRelatedProducts({
+      filter: $filter,
+    });
+    res.json(products);
+  }
 
   async create(req, res) {
     const { product } = req.body;

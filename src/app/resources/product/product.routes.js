@@ -6,7 +6,7 @@ import * as ProductValidations from "../../validations/Product";
 const routes = new Router();
 
 routes.get("/products", Controller.list);
-// routes.get("/products/notRelated", Controller.listNonRelatedProducts);
+routes.get("/products/notRelated", Controller.listNonRelatedProducts);
 routes.get("/products/:id", Controller.get);
 routes.post("/products", ProductValidations.store, Controller.create);
 routes.delete("/products/:id", Controller.delete);
