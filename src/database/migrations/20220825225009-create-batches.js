@@ -36,7 +36,7 @@ module.exports = {
         allowNull: false,
       },
       valid_till: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       created_at: {

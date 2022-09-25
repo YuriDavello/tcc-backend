@@ -64,7 +64,7 @@ class SectorController {
   async update(req, res) {
     const { id } = req.params;
 
-    const { productId, productQuantity, ...rest } = req.body;
+    const { productId, productQuantity } = req.body;
 
     //TODO: VALIDAR QUANTOS PRODUTOS TÊM NO ESTOQUE E RETIRAR DE LÁ, SE O PRODUTO EXISTE NO ESTOQUE
     // E SE A QUANTIDADE FOR MENOR QUE A ANTERIOR, DEVOLVER O EXCEDENTE PARA O ESTOQUE
@@ -76,7 +76,7 @@ class SectorController {
     if (!sector) return res.status(400).json({ message: "Setor inexistente" });
 
     await sector.update({
-      ...rest,
+      ...req.body,
     });
 
     const response = await sectorService.findByPk(id);

@@ -8,7 +8,7 @@ class Batch extends Model {
         productId: Sequelize.INTEGER,
         sectorId: Sequelize.INTEGER,
         productQuantity: Sequelize.INTEGER,
-        validTill: Sequelize.STRING,
+        validTill: Sequelize.DATE,
       },
       {
         sequelize,

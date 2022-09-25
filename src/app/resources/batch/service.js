@@ -2,11 +2,15 @@ import Batch from "../../models/Batch";
 import Product from "../../models/Product";
 
 const props = {
-  attributes: ["id", "code", "product_id", "valid_till"],
+  attributes: ["id", "code", "product_id", "valid_till", "product_quantity"],
 };
 
 const props2 = {
   attributes: ["id", "name", "category", "price", "weight"],
+};
+
+const props3 = {
+  attributes: ["id", "name"],
 };
 class BatchService {
   async getByCode({ code }) {
@@ -17,7 +21,14 @@ class BatchService {
     return batch;
   }
   async findByPk(id) {
-    const batch = await Batch.findByPk(id, { ...props });
+    const batch = await Batch.findByPk(id, {
+      include: {
+        model: Product,
+        as: "product",
+        ...props3,
+      },
+      ...props,
+    });
     if (!batch) return false;
 
     return batch;
