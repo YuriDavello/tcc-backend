@@ -40,6 +40,7 @@ class BatchService {
       },
       ...props,
     });
+
     if (!batch) return false;
 
     return batch;

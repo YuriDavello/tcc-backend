@@ -1,5 +1,6 @@
 import BatchService from "./service";
 import ProductService from "../product/service";
+import SectorService from "../sector/service";
 
 class BatchController {
   async list(req, res) {
@@ -38,15 +39,23 @@ class BatchController {
     const { id } = req.params;
 
     const batchService = new BatchService();
+    const sectorService = new SectorService();
 
     const batch = await batchService.findByPk(id);
+
+    const sectorInfo = await sectorService.findByProductId(batch.productId);
 
     if (!batch)
       return res
         .status(400)
         .json({ status: 400, message: "Lote não encontrado" });
 
-    return res.json(batch);
+    if (!sectorInfo) return res.json(batch);
+
+    return res.json({
+      batch,
+      sectorInfo,
+    });
   }
 
   async delete(req, res) {

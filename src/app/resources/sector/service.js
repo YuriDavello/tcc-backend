@@ -1,6 +1,7 @@
 import Sector from "../../models/Sector";
 import Product from "../../models/Product";
 import Floor from "../../models/Floor";
+import Shelf from "../../models/Shelf";
 
 const props = {
   attributes: ["id", "availableQuantity", "fitsQuantity"],
@@ -19,11 +20,25 @@ class SectorService {
       where: {
         productId,
       },
+      include: [
+        {
+          model: Floor,
+          as: "floor",
+          attributes: ["floorName"],
+          include: [
+            {
+              model: Shelf,
+              as: "shelf",
+              attributes: ["name"],
+            },
+          ],
+        },
+      ],
     });
 
-    if (!sector) return sector;
+    if (!sector) return null;
 
-    return null;
+    return sector;
   }
   async findByPk(id) {
     const sector = await Sector.findByPk(id, {
