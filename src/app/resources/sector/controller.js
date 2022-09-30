@@ -11,13 +11,10 @@ class SectorController {
 
   async create(req, res) {
     const { sector } = req.body;
-    const { productId, fitsQuantity } = sector;
+    const { productId } = sector;
 
     const sectorService = new SectorService();
     const productService = new ProductService();
-
-    //TODO: SE EXISTE QUANTIDADE NO ESTOQUE E
-    //DAR BAIXA NA QUANTIDADE NO ESTOQUE
 
     if (productId) {
       const product = await productService.findByPk(productId);
@@ -63,11 +60,6 @@ class SectorController {
 
   async update(req, res) {
     const { id } = req.params;
-
-    const { productId, productQuantity } = req.body;
-
-    //TODO: VALIDAR QUANTOS PRODUTOS TÊM NO ESTOQUE E RETIRAR DE LÁ, SE O PRODUTO EXISTE NO ESTOQUE
-    // E SE A QUANTIDADE FOR MENOR QUE A ANTERIOR, DEVOLVER O EXCEDENTE PARA O ESTOQUE
 
     const sectorService = new SectorService();
 

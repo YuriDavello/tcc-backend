@@ -6,14 +6,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      quantity_lines: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      quantity_columns: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       available_quantity: {
         type: Sequelize.INTEGER,
         allowNull: true,

@@ -2,7 +2,16 @@ import Batch from "../../models/Batch";
 import Product from "../../models/Product";
 
 const props = {
-  attributes: ["id", "code", "product_id", "valid_till", "product_quantity"],
+  attributes: [
+    "id",
+    "code",
+    "productId",
+    "sectorId",
+    "validTill",
+    "productQuantity",
+    "isQrCodeEmitted",
+    "status",
+  ],
 };
 
 const props2 = {

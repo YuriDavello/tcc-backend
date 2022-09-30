@@ -4,10 +4,8 @@ class Sector extends Model {
   static init(sequelize) {
     super.init(
       {
-        quantityLines: Sequelize.INTEGER,
-        quantityColumns: Sequelize.INTEGER,
-        availableQuantity: Sequelize.INTEGER,
         fitsQuantity: Sequelize.INTEGER,
+        availableQuantity: Sequelize.INTEGER,
         floorId: Sequelize.INTEGER,
         productId: Sequelize.INTEGER,
       },

@@ -9,6 +9,8 @@ class Batch extends Model {
         sectorId: Sequelize.INTEGER,
         productQuantity: Sequelize.INTEGER,
         validTill: Sequelize.DATE,
+        isQrCodeEmitted: Sequelize.BOOLEAN,
+        status: Sequelize.STRING,
       },
       {
         sequelize,

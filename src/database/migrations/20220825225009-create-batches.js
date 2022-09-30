@@ -39,6 +39,14 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+      is_qr_code_emitted: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

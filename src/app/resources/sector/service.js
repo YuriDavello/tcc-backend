@@ -1,10 +1,9 @@
 import Sector from "../../models/Sector";
 import Product from "../../models/Product";
 import Floor from "../../models/Floor";
-import Shelf from "../../models/Shelf";
 
 const props = {
-  attributes: ["id", "quantityLines", "quantityColumns"],
+  attributes: ["id"],
 };
 
 const props2 = {
@@ -16,7 +15,6 @@ const props3 = {
 };
 class SectorService {
   async findByPk(id) {
-    //TODO: INCLUDE DO PRODUTO NO SETOR E A QUANTIDADE
     const sector = await Sector.findByPk(id, {
       include: [
         {

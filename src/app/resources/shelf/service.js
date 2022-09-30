@@ -8,7 +8,7 @@ const props = {
 };
 
 const props2 = {
-  attributes: ["id", "quantityLines", "quantityColumns", "fitsQuantity"],
+  attributes: ["id", "fitsQuantity"],
 };
 
 const props3 = {

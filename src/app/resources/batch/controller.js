@@ -1,5 +1,6 @@
 import BatchService from "./service";
 import ProductService from "../product/service";
+import SectorService from "../sector/service";
 
 class BatchController {
   async list(req, res) {
@@ -10,10 +11,11 @@ class BatchController {
 
   async create(req, res) {
     const { batch } = req.body;
-    const { code, productId } = batch;
+    const { code, productId, sectorId } = batch;
 
     const batchService = new BatchService();
     const productService = new ProductService();
+    const sectorService = new SectorService();
 
     const productExists = await productService.findByPk(productId);
 
@@ -26,6 +28,15 @@ class BatchController {
       return res
         .status(400)
         .json({ message: "Outro lote já possui esse código" });
+
+    if (sectorId) {
+      const sector = await sectorService.findByPk(sectorId);
+      if (sector.products.id !== productId) {
+        return res.status(400).json({
+          message: "Produto do lote não coincide com o produto do setor",
+        });
+      }
+    }
 
     const newBatch = await batchService.create({
       batch,
@@ -63,6 +74,12 @@ class BatchController {
 
   async update(req, res) {
     const { id } = req.params;
+    const { isQRCodeEmitted } = req.body;
+
+    if (isQRCodeEmitted)
+      return res.status(400).json({
+        message: "Não é possível atualizar o produto, QR code já foi emitido",
+      });
 
     const batchService = new BatchService();
 
