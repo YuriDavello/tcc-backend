@@ -3,7 +3,7 @@ import Product from "../../models/Product";
 import Floor from "../../models/Floor";
 
 const props = {
-  attributes: ["id"],
+  attributes: ["id", "availableQuantity", "fitsQuantity"],
 };
 
 const props2 = {

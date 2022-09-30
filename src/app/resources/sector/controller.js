@@ -13,6 +13,8 @@ class SectorController {
     const { sector } = req.body;
     const { productId } = sector;
 
+    let sectorToSave = null;
+
     const sectorService = new SectorService();
     const productService = new ProductService();
 

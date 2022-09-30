@@ -1,6 +1,5 @@
 import BatchService from "./service";
 import ProductService from "../product/service";
-import SectorService from "../sector/service";
 
 class BatchController {
   async list(req, res) {
@@ -97,14 +96,24 @@ class BatchController {
     if (!batch) return res.status(400).json({ message: "Lote inexistente" });
 
     if (status === "Ativo") {
-      const updatedBatch = await batchService.insertBatch({ batch });
-      if (!updatedBatch)
-        return res
-          .status(400)
-          .json({
-            message: "Não existe setor com o produto do lote informado",
-          });
+      const updatedBatchAndSector = await batchService.insertBatch({ batch });
+      if (!updatedBatchAndSector)
+        return res.status(400).json({
+          message:
+            "Não foi possível inserir o lote, não existe setor correspondente ao produto do lote",
+        });
+
+      return res.json(updatedBatchAndSector);
     }
+
+    const updatedBatchAndSector = await batchService.removeBatch({ batch });
+
+    if (!updatedBatchAndSector)
+      return res.status(400).json({
+        message: "Erro ao remover lote",
+      });
+
+    return res.json(updatedBatchAndSector);
   }
 }
 

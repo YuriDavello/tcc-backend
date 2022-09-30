@@ -1,6 +1,7 @@
 import Batch from "../../models/Batch";
 import Product from "../../models/Product";
 import SectorService from "../sector/service";
+import Database from "../../../database/index";
 
 const props = {
   attributes: [
@@ -80,7 +81,65 @@ class BatchService {
       productId: batch.productId,
     });
 
+    const { fitsQuantity: sectorFitsQuantity } = batchProductSector;
+
     if (!batchProductSector) return null;
+
+    const sql = `SELECT availableQuantity FROM SECTORS WHERE productId=${batch.productId}`;
+
+    const [availableQuantity] = await Database.connection.query(sql);
+
+    if (
+      availableQuantity <= sectorFitsQuantity ||
+      availableQuantity === null ||
+      availableQuantity === 0
+    ) {
+      await batch.update({
+        status: "Ativo",
+        sectorId: batchProductSector.id,
+      });
+
+      await batchProductSector.update({
+        fitsQuantity: sectorFitsQuantity + 1,
+      });
+
+      const batchResponse = await findByPk(batch.id);
+      const sectorResponse = await sectorService.findByPk(
+        batchProductSector.id
+      );
+
+      return {
+        batchResponse,
+        sectorResponse,
+      };
+    }
+  }
+
+  async removeBatch({ batch }) {
+    const { sectorId: batchSectorId } = batch;
+
+    const sectorService = new SectorService();
+
+    const sector = await sectorService.findByPk(batchSectorId);
+
+    const { availableQuantity: currentQuantity } = sector;
+
+    await batch.update({
+      status: "Vendido",
+      sectorId: null,
+    });
+
+    await sector.update({
+      availableQuantity: currentQuantity - 1,
+    });
+
+    const batchResponse = await findByPk(batch.id);
+    const sectorResponse = await sectorService.findByPk(batchSectorId);
+
+    return {
+      batchResponse,
+      sectorResponse,
+    };
   }
 }
 
