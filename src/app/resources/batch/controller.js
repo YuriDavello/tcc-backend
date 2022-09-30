@@ -11,11 +11,10 @@ class BatchController {
 
   async create(req, res) {
     const { batch } = req.body;
-    const { code, productId, sectorId } = batch;
+    const { code, productId } = batch;
 
     const batchService = new BatchService();
     const productService = new ProductService();
-    const sectorService = new SectorService();
 
     const productExists = await productService.findByPk(productId);
 
@@ -28,15 +27,6 @@ class BatchController {
       return res
         .status(400)
         .json({ message: "Outro lote já possui esse código" });
-
-    if (sectorId) {
-      const sector = await sectorService.findByPk(sectorId);
-      if (sector.products.id !== productId) {
-        return res.status(400).json({
-          message: "Produto do lote não coincide com o produto do setor",
-        });
-      }
-    }
 
     const newBatch = await batchService.create({
       batch,
@@ -94,6 +84,27 @@ class BatchController {
     const response = await batchService.findByPk(id);
 
     return res.json(response);
+  }
+
+  async updateStatus(req, res) {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    const batchService = new BatchService();
+
+    const batch = await batchService.findByPk(id);
+
+    if (!batch) return res.status(400).json({ message: "Lote inexistente" });
+
+    if (status === "Ativo") {
+      const updatedBatch = await batchService.insertBatch({ batch });
+      if (!updatedBatch)
+        return res
+          .status(400)
+          .json({
+            message: "Não existe setor com o produto do lote informado",
+          });
+    }
   }
 }
 

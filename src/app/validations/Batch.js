@@ -1,11 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const {
-    code,
-    product_quantity: productQuantity,
-    valid_till: validTill,
-    product_id: productId,
-  } = req.body.batch;
+  const { code, productQuantity, validTill, productId } = req.body.batch;
 
   if (code === "" || code === null || code === undefined)
     return res.status(400).json({

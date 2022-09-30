@@ -14,6 +14,17 @@ const props3 = {
   attributes: ["id", "floorName", "shelfId"],
 };
 class SectorService {
+  async findByProductId({ productId }) {
+    const sector = await Sector.findAll({
+      where: {
+        productId,
+      },
+    });
+
+    if (!sector) return sector;
+
+    return null;
+  }
   async findByPk(id) {
     const sector = await Sector.findByPk(id, {
       include: [

@@ -1,5 +1,6 @@
 import Batch from "../../models/Batch";
 import Product from "../../models/Product";
+import SectorService from "../sector/service";
 
 const props = {
   attributes: [
@@ -70,6 +71,16 @@ class BatchService {
     await Batch.destroy({ where: { id }, transaction });
 
     return true;
+  }
+
+  async insertBatch({ batch }) {
+    const sectorService = new SectorService();
+
+    const batchProductSector = await sectorService.findByProductId({
+      productId: batch.productId,
+    });
+
+    if (!batchProductSector) return null;
   }
 }
 
