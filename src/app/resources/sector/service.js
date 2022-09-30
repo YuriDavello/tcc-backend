@@ -15,31 +15,6 @@ const props3 = {
   attributes: ["id", "floorName", "shelfId"],
 };
 class SectorService {
-  async findByProductId({ productId }) {
-    const sector = await Sector.findAll({
-      where: {
-        productId,
-      },
-      include: [
-        {
-          model: Floor,
-          as: "floor",
-          attributes: ["floorName"],
-          include: [
-            {
-              model: Shelf,
-              as: "shelf",
-              attributes: ["name"],
-            },
-          ],
-        },
-      ],
-    });
-
-    if (!sector) return null;
-
-    return sector;
-  }
   async findByPk(id) {
     const sector = await Sector.findByPk(id, {
       include: [
@@ -57,6 +32,16 @@ class SectorService {
       ...props,
     });
     if (!sector) return false;
+
+    return sector;
+  }
+
+  async productSectorExists({ productId }) {
+    const sector = Sector.findAll({
+      where: productId,
+    });
+
+    if (!sector) return null;
 
     return sector;
   }

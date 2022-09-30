@@ -25,6 +25,31 @@ class ShelfService {
     return shelf;
   }
 
+  async getByProductId({ productId }) {
+    const shelf = await Shelf.findAll({
+      include: [
+        {
+          model: Floor,
+          as: "floors",
+          attributes: ["floorName"],
+          include: [
+            {
+              model: Sector,
+              as: "sectors",
+              attributes: ["id"],
+              where: {
+                productId,
+              },
+            },
+          ],
+        },
+      ],
+      attributes: ["name"],
+    });
+
+    return shelf;
+  }
+
   async findByPk(id) {
     const shelf = await Shelf.findByPk(id, {
       include: [

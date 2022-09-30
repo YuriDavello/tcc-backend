@@ -1,5 +1,6 @@
 import BatchService from "./service";
 import ProductService from "../product/service";
+import ShelfService from "../shelf/service";
 import SectorService from "../sector/service";
 
 class BatchController {
@@ -39,22 +40,29 @@ class BatchController {
     const { id } = req.params;
 
     const batchService = new BatchService();
+    const shelfService = new ShelfService();
     const sectorService = new SectorService();
 
     const batch = await batchService.findByPk(id);
 
-    const sectorInfo = await sectorService.findByProductId(batch.productId);
+    const existsBatchProductSector = await sectorService.productSectorExists(
+      batch.productId
+    );
+
+    const shelfInfo = await shelfService.getByProductId({
+      productId: batch.productId,
+    });
 
     if (!batch)
       return res
         .status(400)
         .json({ status: 400, message: "Lote não encontrado" });
 
-    if (!sectorInfo) return res.json(batch);
+    if (!shelfInfo || !existsBatchProductSector) return res.json(batch);
 
     return res.json({
       batch,
-      sectorInfo,
+      shelfInfo,
     });
   }
 
