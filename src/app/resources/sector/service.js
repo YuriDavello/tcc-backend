@@ -37,7 +37,7 @@ class SectorService {
   }
 
   async productSectorExists({ productId }) {
-    const sector = Sector.findAll({
+    const sector = await Sector.findAll({
       where: productId,
     });
 

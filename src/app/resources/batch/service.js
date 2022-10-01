@@ -78,7 +78,7 @@ class BatchService {
   async insertBatch({ batch }) {
     const sectorService = new SectorService();
 
-    const batchProductSector = await sectorService.findByProductId({
+    const [batchProductSector] = await sectorService.productSectorExists({
       productId: batch.productId,
     });
 
@@ -86,12 +86,14 @@ class BatchService {
 
     if (!batchProductSector) return null;
 
-    const sql = `SELECT availableQuantity FROM SECTORS WHERE productId=${batch.productId}`;
+    const sql = `SELECT available_quantity FROM SECTORS WHERE product_id=${batch.productId}`;
 
-    const [availableQuantity] = await Database.connection.query(sql);
+    const [response] = await Database.connection.query(sql);
+
+    const { available_quantity: availableQuantity } = response[0];
 
     if (
-      availableQuantity <= sectorFitsQuantity ||
+      availableQuantity <= (sectorFitsQuantity || 0) ||
       availableQuantity === null ||
       availableQuantity === 0
     ) {
@@ -101,10 +103,10 @@ class BatchService {
       });
 
       await batchProductSector.update({
-        fitsQuantity: sectorFitsQuantity + 1,
+        fitsQuantity: (sectorFitsQuantity || 0) + 1,
       });
 
-      const batchResponse = await findByPk(batch.id);
+      const batchResponse = await this.findByPk(batch.id);
       const sectorResponse = await sectorService.findByPk(
         batchProductSector.id
       );
@@ -134,7 +136,7 @@ class BatchService {
       availableQuantity: currentQuantity - 1,
     });
 
-    const batchResponse = await findByPk(batch.id);
+    const batchResponse = await this.findByPk(batch.id);
     const sectorResponse = await sectorService.findByPk(batchSectorId);
 
     return {
