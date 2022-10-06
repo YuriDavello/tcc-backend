@@ -45,9 +45,9 @@ class BatchController {
 
     const batch = await batchService.findByPk(id);
 
-    const existsBatchProductSector = await sectorService.productSectorExists(
-      batch.productId
-    );
+    const existsBatchProductSector = await sectorService.productSectorExists({
+      productId: batch.productId,
+    });
 
     const shelfInfo = await shelfService.getByProductId({
       productId: batch.productId,
@@ -112,7 +112,7 @@ class BatchController {
 
     if (!batch) return res.status(400).json({ message: "Lote inexistente" });
 
-    if (status === "Ativo") {
+    if (status.toUpperCase() === "Ativo".toUpperCase()) {
       const updatedBatchAndSector = await batchService.insertBatch({ batch });
       if (!updatedBatchAndSector)
         return res.status(400).json({

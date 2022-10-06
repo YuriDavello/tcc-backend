@@ -82,9 +82,9 @@ class BatchService {
       productId: batch.productId,
     });
 
-    const { fitsQuantity: sectorFitsQuantity } = batchProductSector;
-
     if (!batchProductSector) return null;
+
+    const { fitsQuantity: sectorFitsQuantity } = batchProductSector;
 
     const sql = `SELECT available_quantity FROM SECTORS WHERE product_id=${batch.productId}`;
 
@@ -103,7 +103,7 @@ class BatchService {
       });
 
       await batchProductSector.update({
-        fitsQuantity: (sectorFitsQuantity || 0) + 1,
+        availableQuantity: (availableQuantity || 0) + 1,
       });
 
       const batchResponse = await this.findByPk(batch.id);
