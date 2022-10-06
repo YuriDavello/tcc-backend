@@ -1,13 +1,16 @@
 import Sequelize, { Model } from "sequelize";
 
-class Sector extends Model {
+class Batch extends Model {
   static init(sequelize) {
     super.init(
       {
-        fitsQuantity: Sequelize.INTEGER,
-        availableQuantity: Sequelize.INTEGER,
-        floorId: Sequelize.INTEGER,
+        code: Sequelize.STRING,
         productId: Sequelize.INTEGER,
+        sectorId: Sequelize.INTEGER,
+        productQuantity: Sequelize.INTEGER,
+        validTill: Sequelize.DATE,
+        isQrCodeEmitted: Sequelize.BOOLEAN,
+        status: Sequelize.STRING,
       },
       {
         sequelize,
@@ -20,19 +23,14 @@ class Sector extends Model {
   static associate(models) {
     this.belongsTo(models.Product, {
       foreignKey: "product_id",
-      as: "products",
+      as: "product",
     });
 
-    this.belongsTo(models.Floor, {
-      foreignKey: "floor_id",
-      as: "floor",
-    });
-
-    this.hasMany(models.Batch, {
+    this.belongsTo(models.Sector, {
       foreignKey: "sector_id",
-      as: "batches",
+      as: "batch",
     });
   }
 }
 
-export default Sector;
+export default Batch;

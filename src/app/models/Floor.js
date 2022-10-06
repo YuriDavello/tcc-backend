@@ -4,7 +4,7 @@ class Floor extends Model {
   static init(sequelize) {
     super.init(
       {
-        nameFloor: Sequelize.STRING,
+        floorName: Sequelize.STRING,
         shelfId: Sequelize.INTEGER,
       },
       {
@@ -23,9 +23,7 @@ class Floor extends Model {
 
     this.belongsTo(models.Shelf, {
       foreignKey: "shelf_id",
-      as: "shelves",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
+      as: "floors",
     });
   }
 }

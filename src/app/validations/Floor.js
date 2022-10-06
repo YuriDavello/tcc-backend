@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const { nameFloor, shelfId } = req.body;
+  const { floorName, shelfId } = req.body;
 
-  if (nameFloor === "" || nameFloor === null || nameFloor === undefined)
+  if (floorName === "" || floorName === null || floorName === undefined)
     return res.status(400).json({
       status: 400,
       message: "Nome do(s) andar(es) não informado(s)",

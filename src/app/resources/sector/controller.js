@@ -1,6 +1,6 @@
 import SectorService from "./service";
 import ProductService from "../product/service";
-import InventoryService from "../inventory/service";
+
 class SectorController {
   async list(req, res) {
     const { floorId } = req.query;
@@ -10,33 +10,24 @@ class SectorController {
   }
 
   async create(req, res) {
-    const {
-      productId,
-      quantityLines,
-      fitsProducts,
-      quantityColumns,
-      floorId,
-      availableQuantity = null,
-    } = req.body;
+    const { sector } = req.body;
+    const { productId } = sector;
+
+    let sectorToSave = null;
 
     const sectorService = new SectorService();
 
-    const productService = new ProductService();
+    if (productId) {
+      const product = await productService.findByPk(productId);
 
-    const product = await productService.findByPk(productId);
-
-    if (!product)
-      return res
-        .status(400)
-        .json({ status: 400, message: "Produto não encontrado" });
+      if (!product)
+        return res
+          .status(400)
+          .json({ status: 400, message: "Produto não encontrado" });
+    }
 
     const newSector = await sectorService.create({
-      quantityLines,
-      quantityColumns,
-      floorId,
-      productId,
-      availableQuantity,
-      fitsProducts,
+      sector,
     });
 
     return res.json(newSector);
@@ -71,11 +62,6 @@ class SectorController {
   async update(req, res) {
     const { id } = req.params;
 
-    const { productId, productQuantity, ...rest } = req.body;
-
-    //TODO: VALIDAR QUANTOS PRODUTOS TÊM NO ESTOQUE E RETIRAR DE LÁ, SE O PRODUTO EXISTE NO ESTOQUE
-    // E SE A QUANTIDADE FOR MENOR QUE A ANTERIOR, DEVOLVER O EXCEDENTE PARA O ESTOQUE
-
     const sectorService = new SectorService();
 
     const sector = await sectorService.findByPk(id);
@@ -83,7 +69,7 @@ class SectorController {
     if (!sector) return res.status(400).json({ message: "Setor inexistente" });
 
     await sector.update({
-      ...rest,
+      ...req.body,
     });
 
     const response = await sectorService.findByPk(id);

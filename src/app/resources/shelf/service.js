@@ -3,6 +3,18 @@ import Floor from "../../models/Floor";
 import Sector from "../../models/Sector";
 import Product from "../../models/Product";
 
+const props = {
+  attributes: ["id", "name", "shelfType"],
+};
+
+const props2 = {
+  attributes: ["id", "fitsQuantity"],
+};
+
+const props3 = {
+  attributes: ["id", "name", "category", "price", "weight"],
+};
+
 class ShelfService {
   async get({ name }) {
     const shelf = await Shelf.findOne({
@@ -13,28 +25,55 @@ class ShelfService {
     return shelf;
   }
 
+  async getByProductId({ productId }) {
+    const shelf = await Shelf.findAll({
+      include: [
+        {
+          model: Floor,
+          as: "floors",
+          attributes: ["floorName"],
+          include: [
+            {
+              model: Sector,
+              as: "sectors",
+              attributes: ["id"],
+              where: {
+                productId,
+              },
+            },
+          ],
+        },
+      ],
+      attributes: ["name"],
+    });
+
+    return shelf;
+  }
+
   async findByPk(id) {
     const shelf = await Shelf.findByPk(id, {
       include: [
         {
           model: Floor,
           as: "floors",
-          attributes: ["id", "nameFloor"],
+          attributes: ["id", "floorName"],
           include: [
             {
               model: Sector,
               as: "sectors",
+              ...props2,
               include: [
                 {
                   model: Product,
                   as: "products",
+                  ...props3,
                 },
               ],
             },
           ],
         },
       ],
-      attributes: ["id", "name", "shelfType"],
+      ...props,
       order: [[{ model: Floor, as: "floors" }, "id"]],
     });
     if (!shelf) return false;
@@ -45,20 +84,15 @@ class ShelfService {
   async list() {
     const shelves = await Shelf.findAll({
       order: [["name", "ASC"]],
+      ...props,
     });
     return shelves;
   }
 
-  async create({ name, shelfType }, transaction) {
-    const newShelf = await Shelf.create(
-      {
-        name,
-        shelfType,
-      },
-      {
-        transaction,
-      }
-    );
+  async create({ shelf }, transaction) {
+    const newShelf = await Shelf.create(shelf, {
+      transaction,
+    });
 
     return newShelf;
   }

@@ -3,11 +3,11 @@ import databaseConfig from "../config/database";
 import User from "../app/models/User";
 import Sector from "../app/models/Sector";
 import Product from "../app/models/Product";
-import Inventory from "../app/models/Inventory";
+import Batch from "../app/models/Batch";
 import Floor from "../app/models/Floor";
 import Shelf from "../app/models/Shelf";
 
-const models = [User, Shelf, Sector, Product, Inventory, Floor];
+const models = [User, Shelf, Sector, Product, Batch, Floor];
 
 class Database {
   constructor() {

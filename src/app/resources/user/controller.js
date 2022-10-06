@@ -3,19 +3,17 @@ import UserService from "./service";
 
 class UserController {
   async create(req, res) {
-    const { name, password, email, userType } = req.body;
+    const { user } = req.body;
+    const { email } = user;
 
     const userService = new UserService();
 
-    const user = await userService.get({ email });
-    if (user) return res.status(400).json({ message: "E-mail já cadastrado" });
+    const userExists = await userService.get({ email });
+    if (userExists)
+      return res.status(400).json({ message: "E-mail já cadastrado" });
 
     const newUser = await userService.create({
-      name,
-      email,
-      password,
-      rawPassword: password,
-      userType,
+      user: { rawPassword: user.password, ...user },
     });
 
     return res.json(newUser);

@@ -3,24 +3,47 @@ import Sequelize from "sequelize";
 import Sector from "../../models/Sector";
 import Product from "../../models/Product";
 import Floor from "../../models/Floor";
-// import Database from "../../../database/index";
+import Shelf from "../../models/Shelf";
+
+const props = {
+  attributes: ["id", "availableQuantity", "fitsQuantity"],
+};
+
+const props2 = {
+  attributes: ["id", "name", "category", "price", "weight"],
+};
+
+const props3 = {
+  attributes: ["id", "floorName", "shelfId"],
+};
 class SectorService {
   async findByPk(id) {
-    //TODO: INCLUDE DO PRODUTO NO SETOR E A QUANTIDADE
     const sector = await Sector.findByPk(id, {
-      attributes: ["id", "quantityLines", "quantityColumns"],
       include: [
         {
           model: Product,
           as: "products",
+          ...props2,
         },
         {
           model: Floor,
-          as: "floors",
+          as: "floor",
+          ...props3,
         },
       ],
+      ...props,
     });
     if (!sector) return false;
+
+    return sector;
+  }
+
+  async productSectorExists({ productId }) {
+    const sector = await Sector.findAll({
+      where: productId,
+    });
+
+    if (!sector) return null;
 
     return sector;
   }
@@ -31,7 +54,6 @@ class SectorService {
       where: {
         floorId,
       },
-      attributes: ["id", "quantityLines", "quantityColumns"],
       include: [
         {
           model: Product,
@@ -39,34 +61,15 @@ class SectorService {
           attributes: ["name"],
         },
       ],
+      ...props,
     });
     return sectors;
   }
 
-  async create(
-    {
-      floorId,
-      quantityLines,
-      quantityColumns,
-      productId,
-      availableQuantity,
-      fitsProducts,
-    },
-    transaction
-  ) {
-    const newSector = await Sector.create(
-      {
-        floorId,
-        quantityLines,
-        quantityColumns,
-        productId,
-        availableQuantity,
-        fitsProducts,
-      },
-      {
-        transaction,
-      }
-    );
+  async create({ sector }, transaction) {
+    const newSector = await Sector.create(sector, {
+      transaction,
+    });
     return newSector;
   }
 

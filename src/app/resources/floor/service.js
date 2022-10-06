@@ -1,10 +1,10 @@
 import Floor from "../../models/Floor";
 
 class FloorService {
-  async get({ nameFloor }) {
+  async get({ floorName }) {
     const floor = await Floor.findOne({
       where: {
-        nameFloor,
+        floorName,
       },
     });
     return floor;
@@ -12,7 +12,7 @@ class FloorService {
 
   async findByPk(id) {
     const floor = await Floor.findByPk(id, {
-      attributes: ["id", "nameFloor", "shelfId"],
+      attributes: ["id", "floorName", "shelfId"],
     });
     if (!floor) return false;
 
@@ -25,19 +25,19 @@ class FloorService {
       where: {
         shelfId,
       },
-      attributes: ["id", "nameFloor", "shelfId"],
+      attributes: ["id", "floorName", "shelfId"],
     });
     return floors;
   }
 
-  async create({ shelfId, floors = null, nameFloor }, transaction) {
+  async create({ shelfId, floors = null, floorName = "" }, transaction) {
     let newFloors;
     if (floors) {
       newFloors = await Promise.all(
         floors.map(async (floor) => {
           const newFloor = await Floor.create(
             {
-              nameFloor: floor.nameFloor,
+              floorName: floor.floorName,
               shelfId,
             },
             {
@@ -50,7 +50,7 @@ class FloorService {
     } else {
       newFloors = await Floor.create(
         {
-          nameFloor,
+          floorName,
           shelfId,
         },
         {

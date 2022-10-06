@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const { name, floors, shelfType } = req.body;
+  const { name, shelfType } = req.body.shelf;
 
   if (name === "" || name === null || name === undefined)
     return res.status(400).json({

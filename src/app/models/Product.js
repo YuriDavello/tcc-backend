@@ -18,14 +18,9 @@ class Product extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Sector, {
+    this.hasMany(models.Batch, {
       foreignKey: "product_id",
-      as: "sectors",
-    });
-
-    this.hasMany(models.Inventory, {
-      foreignKey: "product_id",
-      as: "inventories",
+      as: "product",
     });
   }
 }

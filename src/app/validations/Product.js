@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 export const store = (req, res, next) => {
-  const { name, category, weight, price } = req.body;
+  const { name, category, weight, price } = req.body.product;
 
   if (name === "" || name === null || name === undefined)
     return res.status(400).json({

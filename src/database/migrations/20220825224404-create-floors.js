@@ -6,7 +6,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      name_floor: {
+      floor_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
