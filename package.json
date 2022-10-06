@@ -5,9 +5,9 @@
   "main": "dist/server.js",
   "bin": "dist/server.js",
   "scripts": {
-    "build": "sucrase ./src -d ./dist --transforms imports",
+    "build": "sucrase ./src -d ./dist --transforms imports && npx sequelize db:migrate",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "yarn && npx sequelize db:migrate",
+    "migrate": "npx sequelize db:migrate",
     "migrate:undo": "npx sequelize db:migrate:undo",
     "migrate:undo:all": "npx sequelize db:migrate:undo:all",
     "seed": "npx sequelize db:seed:all --debug",
