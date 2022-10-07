@@ -50,11 +50,11 @@ class SectorService {
     return sector;
   }
 
-  async list(floorId) {
+  async list({ floorId }) {
     const sectors = await Sector.findAll({
       order: [["id", "ASC"]],
       where: {
-        floorId,
+        floor_id: floorId,
       },
       include: [
         {

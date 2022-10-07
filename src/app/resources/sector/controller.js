@@ -5,7 +5,7 @@ class SectorController {
   async list(req, res) {
     const { floorId } = req.query;
     const sectorService = new SectorService();
-    const sectors = await sectorService.list(floorId);
+    const sectors = await sectorService.list({ floorId });
     res.json(sectors);
   }
 
