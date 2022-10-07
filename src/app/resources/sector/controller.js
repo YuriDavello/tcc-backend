@@ -16,6 +16,7 @@ class SectorController {
     let sectorToSave = null;
 
     const sectorService = new SectorService();
+    const productService = new ProductService();
 
     if (productId) {
       const product = await productService.findByPk(productId);
