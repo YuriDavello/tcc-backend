@@ -54,7 +54,7 @@ class SectorService {
     const sectors = await Sector.findAll({
       order: [["id", "ASC"]],
       where: {
-        floor_id: floorId,
+        floorId,
       },
       include: [
         {
