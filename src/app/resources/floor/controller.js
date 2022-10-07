@@ -8,25 +8,6 @@ class FloorController {
     res.json(floors);
   }
 
-  async create(req, res) {
-    const { floorName, shelfId } = req.body;
-
-    const floorService = new FloorService();
-
-    const floor = await floorService.get({ floorName });
-    if (floor)
-      return res
-        .status(400)
-        .json({ message: "Nome já pertence à outro andar" });
-
-    const newFloor = await floorService.create({
-      shelfId,
-      floorName,
-    });
-
-    return res.json(newFloor);
-  }
-
   async get(req, res) {
     const { id } = req.params;
 
@@ -51,33 +32,6 @@ class FloorController {
     if (!floor) return res.status(400).json({ message: "Andar não existe" });
 
     return res.sendStatus(204);
-  }
-
-  async update(req, res) {
-    const { id } = req.params;
-    const { floorName } = req.body;
-
-    const floorService = new FloorService();
-
-    const floor = await floorService.findByPk(id);
-
-    if (!floor) return res.status(400).json({ message: "Andar inexistente" });
-
-    if (floorName !== floor.floorName) {
-      const floorExists = await floorService.get({ floorName });
-      if (floorExists)
-        return res
-          .status(400)
-          .json({ message: "Outro andar já possui esse nome" });
-    }
-
-    await floor.update({
-      ...req.body,
-    });
-
-    const response = await floorService.findByPk(id);
-
-    return res.json(response);
   }
 }
 
