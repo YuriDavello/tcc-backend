@@ -71,6 +71,13 @@ class BatchController {
 
     const batchService = new BatchService();
 
+    const { status } = await batchService.findByPk(id);
+
+    if (status && status.toUpperCase() === "ATIVO")
+      return res
+        .status(400)
+        .json({ message: "Não é possível deletar lote ativo em algum setor" });
+
     if (!batch) return res.status(400).json({ message: "Lote não existe" });
 
     const batch = await batchService.delete(id);

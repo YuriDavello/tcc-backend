@@ -59,6 +59,7 @@ class ProductService {
 
   async delete(id, transaction) {
     const product = await Product.findByPk(id);
+
     if (!product) return false;
 
     await Product.destroy({ where: { id }, transaction });

@@ -77,6 +77,7 @@ class SectorService {
 
   async delete(id, transaction) {
     const sector = await Sector.findByPk(id);
+
     if (!sector) return false;
 
     await Sector.destroy({ where: { id }, transaction });

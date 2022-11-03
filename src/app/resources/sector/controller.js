@@ -54,7 +54,15 @@ class SectorController {
 
     const sectorService = new SectorService();
 
+    const { availableQuantity } = await sectorService.findByPk(id);
+
+    if (availableQuantity)
+      return res
+        .status(400)
+        .json({ message: "Não é possível excluir setor com lote disponível" });
+
     const sector = await sectorService.delete(id);
+
     if (!sector) return res.status(400).json({ message: "Setor não existe" });
 
     return res.sendStatus(204);

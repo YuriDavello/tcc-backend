@@ -1,6 +1,5 @@
 import ProductService from "./service";
-// import ProductService from "../product/service";
-
+import Sector from "../../models/Sector";
 class ProductController {
   async list(req, res) {
     const { $filter } = req.query;
@@ -56,7 +55,19 @@ class ProductController {
 
     const productService = new ProductService();
 
+    const sector = await Sector.findOne({
+      where: {
+        productId: id,
+      },
+    });
+
+    if (sector)
+      return res.status(400).json({
+        message: "Não é possível excluir produto relacionado com algum setor",
+      });
+
     const product = await productService.delete(id);
+
     if (!product)
       return res.status(400).json({ message: "Produto não existe" });
 

@@ -53,8 +53,17 @@ class ShelfController {
     const { id } = req.params;
 
     const shelfService = new ShelfService();
+    const floorService = new FloorService();
+
+    const floors = await floorService.list(id);
+
+    if (floors && floors.length > 0)
+      return res.status(400).json({
+        message: "Não é possível excluir prateleira com andar dentro",
+      });
 
     const shelf = await shelfService.delete(id);
+
     if (!shelf)
       return res.status(400).json({ message: "Prateleira não existe" });
 
