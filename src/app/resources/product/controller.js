@@ -1,5 +1,6 @@
 import ProductService from "./service";
 import Sector from "../../models/Sector";
+import Batch from "../../models/Batch";
 class ProductController {
   async list(req, res) {
     const { $filter } = req.query;
@@ -61,9 +62,20 @@ class ProductController {
       },
     });
 
+    const batch = await Batch.findAll({
+      where: {
+        productId: id,
+      },
+    });
+
+    if (batch && batch.length > 0)
+      return res.status(400).json({
+        message: "Não é possível excluir produto relacionado a algum lote",
+      });
+
     if (sector)
       return res.status(400).json({
-        message: "Não é possível excluir produto relacionado com algum setor",
+        message: "Não é possível excluir produto relacionado a algum setor",
       });
 
     const product = await productService.delete(id);
