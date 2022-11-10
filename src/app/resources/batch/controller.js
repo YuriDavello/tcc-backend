@@ -71,7 +71,9 @@ class BatchController {
 
     const batchService = new BatchService();
 
-    const { status } = await batchService.findByPk(id);
+    const batch = await batchService.findByPk(id);
+
+    const { status } = batch;
 
     if (status && status.toUpperCase() === "ATIVO")
       return res
@@ -80,9 +82,11 @@ class BatchController {
 
     if (!batch) return res.status(400).json({ message: "Lote não existe" });
 
-    const batch = await batchService.delete(id);
+    const response = await batchService.delete(id);
 
-    return res.sendStatus(204);
+    if (response) return res.sendStatus(204);
+
+    return res.status(400).json({ message: "Não foi possível deletar lote" });
   }
 
   async update(req, res) {
