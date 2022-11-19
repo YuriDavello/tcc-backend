@@ -131,6 +131,11 @@ class BatchController {
             "Não foi possível inserir o lote, não existe setor correspondente ao produto do lote",
         });
 
+      if (updatedBatchAndSector === 500)
+        return res.status(400).json({
+          message: "Não foi possível inserir o lote, o setor está cheio",
+        });
+
       return res.json(updatedBatchAndSector);
     }
 

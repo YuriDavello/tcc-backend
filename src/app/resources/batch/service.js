@@ -93,7 +93,7 @@ class BatchService {
     const { available_quantity: availableQuantity } = response[0];
 
     if (
-      availableQuantity <= (sectorFitsQuantity || 0) ||
+      availableQuantity < (sectorFitsQuantity || 0) ||
       availableQuantity === null ||
       availableQuantity === 0
     ) {
@@ -116,6 +116,8 @@ class BatchService {
         sectorResponse,
       };
     }
+
+    return 500;
   }
 
   async removeBatch({ batch }) {
