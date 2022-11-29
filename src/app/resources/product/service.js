@@ -54,6 +54,7 @@ class ProductService {
     const newProduct = await Product.create(product, {
       transaction,
     });
+
     return newProduct;
   }
 
