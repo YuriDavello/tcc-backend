@@ -45,6 +45,11 @@ class BatchController {
 
     const batch = await batchService.findByPk(id);
 
+    if (!batch)
+      return res
+        .status(400)
+        .json({ status: 400, message: "Lote não encontrado" });
+
     const existsBatchProductSector = await sectorService.productSectorExists({
       productId: batch.productId,
     });
@@ -53,12 +58,13 @@ class BatchController {
       productId: batch.productId,
     });
 
-    if (!batch)
-      return res
-        .status(400)
-        .json({ status: 400, message: "Lote não encontrado" });
-
-    if (!shelfInfo || !existsBatchProductSector) return res.json(batch);
+    if (
+      !shelfInfo ||
+      shelfInfo.length === 0 ||
+      !existsBatchProductSector ||
+      existsBatchProductSector.length === 0
+    )
+      return res.json(batch);
 
     return res.json({
       batch,
