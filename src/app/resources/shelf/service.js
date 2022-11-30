@@ -8,7 +8,7 @@ const props = {
 };
 
 const props2 = {
-  attributes: ["id", "fitsQuantity"],
+  attributes: ["id", "fitsQuantity", "availableQuantity"],
 };
 
 const props3 = {
