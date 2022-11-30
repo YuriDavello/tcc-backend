@@ -26,7 +26,7 @@ class ShelfService {
   }
 
   async getByProductId({ productId }) {
-    const shelf = await Shelf.findAll({
+    const shelf = await Shelf.findOne({
       include: [
         {
           model: Floor,
