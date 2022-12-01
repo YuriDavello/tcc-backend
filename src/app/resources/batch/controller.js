@@ -64,7 +64,7 @@ class BatchController {
       !existsBatchProductSector ||
       existsBatchProductSector.length === 0
     )
-      return res.json(batch);
+      return res.json({ batch });
 
     return res.json({
       batch,
